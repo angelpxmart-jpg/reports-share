@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>跨境滿1500折100 兩波成效分析</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--blue:#13227f;--blue-mid:#3d4fa0;--blue-light:#eef0fa;--blue-4:#c5cae9;--red:#e40011;--red-soft:#fff0f0;--ink:#1a1a1a;--ink2:#444;--slate:#757575;--line:#e0e0e0;--line2:#eee;--surface:#f7f8fc;--ok:#2e7d32;--ok-soft:#e8f5e9;--warn:#e65100;--warn-soft:#fff3e0;--info:#1565c0;--info-soft:#e3f2fd}
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:var(--ink);font-family:'Noto Sans TC',-apple-system,'PingFang TC','Microsoft JhengHei',sans-serif;font-size:15px;line-height:1.6}
+.wrap{max-width:1080px;margin:0 auto;padding:24px 32px 48px}
+header{background:var(--blue);color:#fff;border-radius:10px;padding:24px 28px;position:relative;overflow:hidden;margin-bottom:24px}
+header:after{content:"";position:absolute;right:0;top:0;bottom:0;width:8px;background:var(--red)}
+header .tag{font-size:13px;opacity:.85;letter-spacing:.5px}
+header h1{margin:4px 0 6px;font-size:26px;line-height:1.3}
+header .meta{font-size:13px;opacity:.85}
+h2{font-size:20px;margin:36px 0 12px;padding-left:12px;border-left:4px solid var(--blue)}
+.snav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;gap:8px;overflow-x:auto;white-space:nowrap;background:#fff;padding:10px 0;margin:20px 0 0;border-bottom:1px solid var(--line);scrollbar-width:none}
+.snav::-webkit-scrollbar{display:none}
+.snav a{flex:none;font-size:13px;color:var(--blue);background:var(--blue-light);border-radius:999px;padding:4px 12px;text-decoration:none}
+.snav a.on{background:var(--blue);color:#fff}
+h2{scroll-margin-top:64px}
+h3{font-size:16px;margin:20px 0 8px}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.card{border:1px solid var(--line);border-radius:10px;padding:16px 18px;background:#fff}
+.card.hl{background:var(--blue);color:#fff;border-color:var(--blue)}
+.card .lb{font-size:13px;color:var(--slate)}
+.card.hl .lb,.card.hl .sub{color:#dfe3f7}
+.card .v{font-size:32px;font-weight:700;line-height:1.2;margin:4px 0}
+.card .v small{font-size:15px;font-weight:500;margin-left:2px}
+.split{display:grid;grid-template-columns:1fr 1fr;margin:6px 0 4px}
+.split>div{padding-right:8px}
+.split>div+div{border-left:1px solid var(--line);padding-left:12px}
+.card.hl .split>div+div{border-color:rgba(255,255,255,.3)}
+.split .wv{display:block;font-size:12px;color:var(--slate)}
+.card.hl .split .wv{color:#dfe3f7}
+.split b{display:block;font-size:24px;line-height:1.2;white-space:nowrap}
+.split b small{font-size:13px;font-weight:500;margin-left:2px}
+.split .up{margin-top:2px}
+.card .sub{font-size:13px;color:var(--ink2)}
+.up{display:inline-block;background:var(--ok-soft);color:var(--ok);border-radius:999px;padding:0 8px;font-size:12px;font-weight:700}
+.card.hl .up{background:#fff}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
+th{background:var(--blue);color:#fff;font-weight:500;padding:10px 12px;text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+td{padding:10px 12px;text-align:right;border-bottom:1px solid var(--line2);font-variant-numeric:tabular-nums}
+tr:nth-child(even) td{background:var(--surface)}
+tr.tot td{background:var(--blue-light);color:var(--blue);font-weight:700}
+tr.sep td{border-top:2px solid var(--blue-4)}
+table.txt th,table.txt td{text-align:left}
+table.txt td:first-child{white-space:nowrap}
+table.eq{table-layout:fixed}
+table.eq th,table.eq td{white-space:normal;word-break:break-word;text-align:center}
+table.eq th:first-child,table.eq td:first-child{text-align:left}
+td.sk{text-align:left;color:var(--slate);font-variant-numeric:tabular-nums}
+table.num th:nth-child(2){text-align:left}
+table.num td:first-child{font-variant-numeric:tabular-nums;color:var(--slate)}
+td.red{color:var(--red);font-weight:700}
+td.mute{color:var(--slate)}
+.callout{border-radius:8px;padding:14px 18px;margin:14px 0;border-left:4px solid var(--blue);background:var(--blue-light)}
+.callout.warn{border-color:var(--warn);background:var(--warn-soft)}
+.callout.ok{border-color:var(--ok);background:var(--ok-soft)}
+.callout b{color:var(--ink)}
+.pending{border:1px dashed var(--blue-4);border-radius:10px;padding:14px 18px;color:var(--slate);font-size:14px;background:#fff;margin:10px 0}
+.chart{border:1px solid var(--line);border-radius:10px;padding:16px;position:relative}
+.legend{display:flex;gap:18px;font-size:13px;color:var(--ink2);margin-bottom:6px;flex-wrap:wrap}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+svg text{font-family:inherit}
+.tip{position:absolute;pointer-events:none;background:#fff;border:1px solid var(--line);border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,.12);padding:8px 10px;font-size:13px;white-space:nowrap}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.two table{min-width:0;font-size:13.5px}
+.two th,.two td{padding:8px 10px}
+.two th:first-child{width:auto}
+.hgrid{display:grid;gap:0}
+.hgrid .tr{display:grid;grid-template-columns:minmax(150px,1.1fr) 1fr 1fr;gap:16px;align-items:center;padding:12px 8px;border-bottom:1px solid var(--line2)}
+.hgrid .tr.th{font-size:13px;color:var(--slate);padding:4px 8px}
+.hgrid .tr.hot{background:var(--blue-light);border-radius:8px}
+.hgrid .tr.tt{border-bottom:none;font-weight:700}
+.hgrid .tl b{display:block;font-size:15px}
+.hgrid .tl span{font-size:13px;color:var(--ink2)}
+.hgrid .tl small{display:block;font-size:12px;color:var(--red)}
+.hb{display:flex;align-items:center;gap:8px;min-height:22px}
+.hb span{display:block;height:20px;border-radius:3px}
+.hb span.l{background:var(--blue-4)}
+.hb span.d{background:var(--blue)}
+.hb span.neg{width:4px;background:var(--slate)}
+.hb em{font-style:normal;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+ol.pts{padding-left:20px;font-size:14.5px;margin:14px 0 6px}
+ol.pts li{margin:4px 0}
+details.more{margin-top:10px}
+details.more summary{cursor:pointer;color:var(--blue-mid);font-size:14px;margin-bottom:8px}
+ol.ins{padding-left:0;list-style:none;counter-reset:n;margin:0}
+ol.ins li{counter-increment:n;position:relative;padding:12px 0 12px 44px;border-bottom:1px solid var(--line2)}
+ol.ins li:before{content:counter(n,decimal-leading-zero);position:absolute;left:0;top:12px;color:var(--blue);font-weight:700;font-size:18px}
+ol.ins li b.t{display:block;font-size:16px}
+.bars{display:grid;grid-template-columns:auto 1fr auto;gap:6px 12px;align-items:center;font-size:14px}
+.bars .b{height:14px;background:var(--blue-mid);border-radius:3px}
+.bars .b.mx{background:var(--blue)}
+.badge{display:inline-block;border-radius:999px;padding:0 8px;font-size:12px;background:#f5f5f5;color:var(--slate)}
+.badge.w1{background:var(--blue-light);color:var(--blue-mid)}
+.badge.w2{background:var(--blue);color:#fff}
+footer{margin-top:40px;font-size:12.5px;color:var(--slate);border-top:1px solid var(--line);padding-top:14px}
+footer li{margin:2px 0}
+@media (max-width:760px){.hgrid .tr{grid-template-columns:96px 1fr 1fr;gap:8px}.wrap{padding:16px}.split b{font-size:20px}.cards{grid-template-columns:repeat(2,1fr)}.two{grid-template-columns:1fr}.card .v{font-size:26px}header h1{font-size:21px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="tag">跨境豐收 JBP｜雙 11 SMS＋APP Push 第一波、第二波</div>
+  <h1>滿 1,500 折 100 兩波成效分析（10/15–16、10/22–23）</h1>
+  <div class="meta">資料截至 2026-10-26｜更新 2026-10-27（第一版 10/19 只含第一波）｜含 277 位購買會員輪廓｜用途：兩波檢討</div>
+</header>
+
+<div class="cards">
+  <div class="card hl"><div class="lb">兩天跨境業績</div><div class="split"><div><span class="wv">第一波</span><b>27.38<small>萬元</small></b></div><div><span class="wv">第二波</span><b>42.70<small>萬元</small></b></div></div><div class="sub">兩波合計 70.07 萬元</div></div>
+  <div class="card"><div class="lb">比非活動日基準</div><div class="split"><div><span class="wv">第一波</span><b>+5.6<small>萬元</small></b><span class="up">+26%</span></div><div><span class="wv">第二波</span><b>+20.9<small>萬元</small></b><span class="up">+96%</span></div></div><div class="sub">基準 2 天 21.79 萬元</div></div>
+  <div class="card"><div class="lb">原價滿 1,500 元的訂單</div><div class="split"><div><span class="wv">第一波</span><b>77<small>張</small></b><span class="up">+41%</span></div><div><span class="wv">第二波</span><b>109<small>張</small></b><span class="up">+100%</span></div></div><div class="sub">基準 2 天約 55 張</div></div>
+  <div class="card"><div class="lb">跨境券使用</div><div class="split"><div><span class="wv">第一波</span><b>72<small>張單</small></b></div><div><span class="wv">第二波</span><b>93<small>張單</small></b></div></div><div class="sub">折 7,200｜16,900 元<br>第二波每滿 1,500 可累折（共 169 次）</div></div>
+</div>
+
+<nav class="snav" id="snav"><a href="#s0">活動設定</a><a href="#s1">1 觸及</a><a href="#s2">2 銷售</a><a href="#s3">3 疊券</a><a href="#s4">4 價格帶</a><a href="#s5">5 品牌</a><a href="#s6">6 會員輪廓</a><a href="#s7">7 時段</a><a href="#s8">8 APM 漏斗</a><a href="#s9">9 Insight</a></nav>
+
+<h2 id="s0">活動設定</h2>
+<div class="tw"><table class="txt">
+<tr><th>項目</th><th>第一波</th><th>第二波</th></tr>
+<tr><td>期間</td><td>10/15（四）–10/16（五）</td><td>10/22（四）–10/23（五）</td></tr>
+<tr><td>優惠／券別</td><td>跨境品項滿 1,500 折 100｜PMC0026120 行銷現折</td><td>同左｜PMC0026640 行銷現折</td></tr>
+<tr><td>SMS 受眾</td><td>跨境美妝已購、180 天未購（沉睡舊客）7,240 人</td><td>近三個月加車美妝未購 5,354＋瀏覽美妝未購 4,646，共 10,000 人</td></tr>
+<tr><td>APP Push 受眾</td><td>美妝受眾：PxPay 100 萬＋PxGo 32 萬</td><td>美妝受眾：PxPay 200 萬＋PxGo 30 萬（預估）</td></tr>
+<tr><td>發送時間</td><td>SMS 12:00｜PxPay、PxGo 14:00</td><td>SMS 12:00｜PxPay 14:00｜PxGo 19:00</td></tr>
+<tr><td>SMS 文案</td><td>【全電商】好久不見👋你的專屬折價券已送達🔔專櫃醫美保養滿1500折100，限時兩天🔥立即領→</td><td>【全電商】專櫃醫美保養限時2天！全館滿1500折100，結帳直接折，只到10/23🔥→</td></tr>
+<tr><td>APP Push 文案</td><td>【全電商】好久不見👋專屬回饋／專櫃醫美保養全館滿額折100🔥點我領→</td><td>【全電商】專櫃保養限時折100💙只有兩天／資生堂、SK-II、蘭蔻✨專櫃醫美保養限時滿1500折100，結帳自動折，雙11前先入手</td></tr>
+<tr><td>同期全站活動（干擾）</td><td>10/15 週四美妝日（滿 2,000 享 95 折）</td><td>10/22 週四美妝日＋會員日（滿 999 折 200，10/20–10/22）<br>10/23 起全站「購物車滿 1500 折抵 100 元」每天大量使用</td></tr>
+</table></div>
+<div class="callout"><b>券的性質：</b>兩張都是行銷現折，限跨境品項、<b>所有人都能用</b>，不限 SMS 名單，也可以和其他券一起用。所以訂單沒辦法只拆出 SMS／APP Push 名單帶來的成效：第 1 段看推播的點擊和 UTM 追蹤，第 2 段起看跨境整體多賣了多少。</div>
+<h3>後續：折價贈點使用（合約 14 萬元，至 11/8）</h3>
+<div class="tw"><table>
+<tr><th>券別</th><th>用券日</th><th>券額</th><th>用券人數／訂單</th></tr>
+<tr><td>第一波 SMS｜PMC0026120 滿 1,500 折 100</td><td>10/15–10/16</td><td>7,200 元</td><td>70 人／72 張</td></tr>
+<tr><td>第二波 SMS｜PMC0026640 滿 1,500 折 100（可累折）</td><td>10/22–10/23</td><td>16,500 元</td><td>89 人／91 張</td></tr>
+<tr><td>雙 11 加碼日｜PMC0027766 滿 3,000 折 350（可累折）</td><td>11/1</td><td>66,500 元</td><td>154 人／160 張</td></tr>
+<tr><td>新辦法｜PMC0028878 滿 3,000 折 250（不可累折）</td><td>11/7–11/8</td><td>27,750 元</td><td>106 人／111 張</td></tr>
+<tr class="tot"><td>合計</td><td></td><td>117,950 元</td><td></td></tr>
+<tr><td>合約剩餘</td><td></td><td>22,050 元</td><td>140,000 − 117,950</td></tr>
+</table></div>
+<div class="callout">來源：BI「Sales／廠商活動_現折公版報表」，不含取消單，金額已扣退貨（2026-11-09 查）。11 月還在退貨期，11/30 核銷前會再更新。</div>
+
+<h2 id="s1">1. SMS／APP Push 觸及成效</h2>
+<h3>第一波（10/15 發送）</h3>
+<div class="tw"><table>
+<tr><th>管道</th><th>預估人數</th><th>發送數</th><th>點擊數</th><th>點擊率</th><th>預估點擊率</th><th>訂單（張）</th><th>轉換率</th><th>收益（元）</th></tr>
+<tr><td>SMS（沉睡舊客）</td><td>7,240</td><td>3,971</td><td>129</td><td class="red">3.25%</td><td>12.08%</td><td>4</td><td>3.10%</td><td>8,248</td></tr>
+<tr><td>APP Push｜PxPay 14:00</td><td>1,000,000</td><td>953,349</td><td>3,626</td><td class="red">0.38%</td><td>0.42%</td><td>5</td><td>0.14%</td><td>8,615</td></tr>
+<tr><td>APP Push｜PxGo 14:00</td><td>320,000</td><td>326,800</td><td>548</td><td class="red">0.17%</td><td>0.42%</td><td>4</td><td>0.73%</td><td>9,378</td></tr>
+<tr class="tot"><td>合計</td><td>1,327,240</td><td>1,284,120</td><td>4,303</td><td>0.34%</td><td>—</td><td>13</td><td>0.30%</td><td>26,241</td></tr>
+</table></div>
+<p style="font-size:13px;color:var(--slate);margin-top:8px">收益是 UTM 追蹤到的 D+1 業績，只占第一波兩天跨境業績的 10%、增量的約 47%。SMS 名單 7,240 人只發出 3,971 則（55%，名單有效數），成本 2,462 元、ROAS 3.35。</p>
+<h3>第二波（10/22 發送）</h3>
+<div class="tw"><table>
+<tr><th>管道</th><th>預估人數</th><th>發送數</th><th>點擊數</th><th>點擊率</th><th>預估點擊率</th><th>訂單（張）</th><th>轉換率</th><th>收益（元）</th></tr>
+<tr><td>SMS（加車／瀏覽未購）</td><td>10,000</td><td>10,000</td><td>待補</td><td>—</td><td>—</td><td>待補</td><td>—</td><td>待補</td></tr>
+<tr><td>APP Push｜PxPay 14:00</td><td>2,000,000</td><td>1,412,185</td><td>3,860</td><td class="red">0.27%</td><td>0.42%</td><td>7</td><td>0.18%</td><td>50,156</td></tr>
+<tr><td>APP Push｜PxGo 19:00</td><td>300,000</td><td>327,038</td><td>508</td><td class="red">0.16%</td><td>0.42%</td><td>7</td><td>1.38%</td><td>9,006</td></tr>
+<tr class="tot"><td>APP Push 合計</td><td>2,300,000</td><td>1,739,223</td><td>4,368</td><td>0.25%</td><td>—</td><td>14</td><td>0.32%</td><td>59,162</td></tr>
+</table></div>
+<p style="font-size:13px;color:var(--slate);margin-top:8px">APP Push 的 UTM D+1 收益 5.9 萬元，占第二波兩天跨境業績的 14%、保守增量（12–15 萬元）的約 4–5 成。PxPay 點擊只比第一波多 6%，收益卻是 5.8 倍，7 張訂單平均約 7,200 元，主要是少數大單撐起來的。PxPay 發送數 1,412,185 是行銷 10/28 後更新的數字（10/28 查時為 1,016,632）。</p>
+<div class="pending"><b>待補：</b>SMS（10,000 人，12:00）的點擊、UTM 訂單與收益，行銷尚未回填 D+1（資源表只有發送數 10,000、費用 6,200 元）。補上後可以判斷「加車／瀏覽未購」名單是不是比沉睡舊客好。</div>
+
+<h2 id="s2">2. 銷售成效</h2>
+<div class="chart">
+  <div class="legend"><span><i style="background:var(--blue-mid)"></i>第一波</span><span><i style="background:var(--blue)"></i>第二波</span><span><i style="background:var(--blue-4)"></i>非活動日</span><span><i style="background:#e0e0e0"></i>全站大檔／會員日（不列入基準）</span><span><i style="background:none;border-top:2px dashed #757575;height:0;border-radius:0;vertical-align:3px"></i>非活動日基準 10.90 萬元</span></div>
+  <svg id="daily" viewBox="0 0 1000 300" width="100%" role="img" aria-label="跨境 10/1 到 10/26 每日業績長條圖"></svg>
+  <div class="tip" id="tip" hidden></div>
+</div>
+
+<h3>和基準比較</h3>
+<div class="tw"><table>
+<tr><th>期間</th><th>業績（元）</th><th>訂單（張）</th><th>原價滿 1,500 元（張）</th><th>客單價（元）</th><th>比較對象</th><th>差異</th></tr>
+<tr><td>10/15（四）</td><td>179,510</td><td>72</td><td>48</td><td>2,493</td><td>非活動週四（10/1、10/8）日均 131,983 元</td><td class="red">+36%</td></tr>
+<tr><td>10/16（五）</td><td>94,266</td><td>53</td><td>29</td><td>1,779</td><td>非活動週五（10/2）70,093 元</td><td class="red">+34%</td></tr>
+<tr class="tot"><td>第一波合計</td><td>273,776</td><td>125</td><td>77</td><td>2,190</td><td>非活動日基準 ×2 天 217,906 元</td><td>+26%</td></tr>
+<tr class="sep"><td>10/22（四）</td><td>240,891</td><td>94</td><td>64</td><td>2,563</td><td>非活動週四（10/1、10/8）日均 131,983 元</td><td class="red">+83%</td></tr>
+<tr><td>10/23（五）</td><td>186,074</td><td>67</td><td>45</td><td>2,777</td><td>10/24–10/26 日均 129,294 元（同樣有全站購物車滿 1500 折 100）</td><td class="red">+44%</td></tr>
+<tr class="tot"><td>第二波合計</td><td>426,965</td><td>161</td><td>109</td><td>2,652</td><td>非活動日基準 ×2 天 217,906 元</td><td>+96%</td></tr>
+<tr class="sep"><td>非活動日基準（日均）</td><td>108,953</td><td>54.1</td><td>27.3</td><td>2,013</td><td colspan="2">10/1–10/26 扣掉全站大檔（10/7、10/9、10/10）、會員日（10/20、10/21）和兩波活動日，共 17 天</td></tr>
+</table></div>
+<div class="callout warn"><b>第二波的干擾要扣掉：</b>10/22 同時是會員日（全站滿 999 折 200）。10/20、10/21 只有會員日、沒有跨境券，跨境業績分別比同星期的非活動日多 4.9 萬元、1.8 萬元。扣掉這部分，10/22 的增量大約剩 6–9 萬元。10/23 改用同樣有全站滿 1500 折 100 的 10/24–10/26 當比較基準，增量約 5.7 萬元。<b>所以第二波保守估計多賣約 12–15 萬元</b>，介在這個數字和直接比基準的 20.9 萬元之間。</div>
+<div class="callout"><b>第二波的券每滿 1,500 元可以重複折：</b>依 BI「廠商活動_現折公版報表」，第二波用券訂單 93 張、券額 16,900 元。每張單折的次數＝原價 ÷ 1,500 取整數，最多一張折 700 元。照這個規則算，10/22 是 8,900 元、10/23 是 8,000 元，和券檔的 89 次、80 次（10/23 79 次＋10/24 1 次）完全對得上。第一波每張單只折一次。（規則依訂單資料判斷）</div>
+
+<h2 id="s3">3. 疊券與折扣率</h2>
+<div class="tw"><table class="eq"><colgroup><col style="width:20%"><col style="width:20%"><col style="width:20%"><col style="width:20%"><col style="width:20%"></colgroup>
+<tr><th>項目</th><th>10/15（四）</th><th>10/16（五）</th><th>10/22（四）</th><th>10/23（五）</th></tr>
+<tr><td>用跨境券的訂單</td><td>45</td><td>27</td><td>54</td><td>39</td></tr>
+<tr><td>同時疊其他券</td><td>40（89%）</td><td>3（11%）</td><td>48（89%）</td><td>36（92%）</td></tr>
+<tr><td>整張訂單折扣 ≥ 300 元</td><td>17</td><td>1</td><td>30</td><td>18</td></tr>
+<tr><td>用券訂單的折扣率</td><td>6.3%</td><td>4.4%</td><td class="red">9.1%</td><td>7.8%</td></tr>
+<tr><td>當天主要疊的券</td><td>週四美妝日 95 折、領紅包滿 888 折 200</td><td>—</td><td>會員日滿 999 折 200、週四美妝日 95 折</td><td>全站購物車滿 1500 折 100、領紅包滿 888 折 200</td></tr>
+</table></div>
+<div class="tw"><table class="eq"><colgroup><col style="width:24%"><col style="width:20%"><col style="width:14%"><col style="width:14%"><col style="width:14%"><col style="width:14%"></colgroup>
+<tr><th>第二波每張單折幾次</th><th>原價區間（元）</th><th>10/22（四）</th><th>10/23（五）</th><th>合計（張）</th><th>券額（元）</th></tr>
+<tr><td>1 次（100 元）</td><td>1,500–2,999</td><td>32</td><td>24</td><td>56</td><td>5,600</td></tr>
+<tr><td>2 次（200 元）</td><td>3,000–4,499</td><td>10</td><td>5</td><td>15</td><td>3,000</td></tr>
+<tr><td>3 次（300 元）</td><td>4,500–5,999</td><td>11</td><td>4</td><td>15</td><td>4,500</td></tr>
+<tr><td>4 次以上（400–700 元）</td><td>6,000 以上</td><td>1</td><td>6</td><td>7</td><td>3,800</td></tr>
+<tr class="tot"><td>合計</td><td>—</td><td>54</td><td>39</td><td>93</td><td>16,900</td></tr>
+</table></div>
+<p>折 2 次以上的 37 張單（占 40%）用掉 1.13 萬元券額，占第二波券額的 67%。第一波 72 張全部只折 1 次。</p>
+<div class="callout warn"><b>10/22 折扣率超過 10/19 設定的上限：</b>當時決定接受週四折扣率 6–8%，超過 8% 就要重新評估能不能併用。10/22 是 9.1%，主要是會員日券（滿 999 折 200）也能疊，加上第二波券可以累折。折扣 ≥ 300 元的訂單從 10/15 的 17 張增加到 30 張，占用券訂單的 56%。另外，第一波週五幾乎沒人疊券，第二波週五卻有 86% 疊券，因為全站購物車滿 1500 折 100 從 10/23 開始每天大量使用。</div>
+
+<h2 id="s4">4. 客單價與價格帶</h2>
+<div class="tw"><table>
+<tr><th>跨境原價（每張訂單）</th><th>非活動日</th><th>第一波</th><th>第二波</th></tr>
+<tr><td>1,000 元以下</td><td>27.5%</td><td>23.8%</td><td>18.6%</td></tr>
+<tr><td>1,000–1,499 元</td><td>20.8%</td><td>13.1%</td><td>13.7%</td></tr>
+<tr><td>1,500–1,999 元</td><td>12.2%</td><td class="red">17.2%</td><td>15.5%</td></tr>
+<tr><td>2,000–2,999 元</td><td>18.3%</td><td>19.7%</td><td>19.3%</td></tr>
+<tr><td>3,000–4,999 元</td><td>15.3%</td><td>21.3%</td><td class="red">23.6%</td></tr>
+<tr><td>5,000 元以上</td><td>5.9%</td><td>4.9%</td><td class="red">9.3%</td></tr>
+<tr class="tot"><td>平均原價／中位數</td><td>2,122／1,529 元</td><td>2,368／1,894 元</td><td>2,871／2,350 元</td></tr>
+<tr><td>每張訂單件數</td><td>1.43</td><td>1.52</td><td>1.39</td></tr>
+</table></div>
+<p style="font-size:14px;color:var(--ink2)">兩波都把 1,000–1,499 元的訂單往上推（20.8% 降到 13% 左右）。第一波主要推到剛過門檻的 1,500–1,999 元；第二波則多出 3,000 元以上的大單（占 33%，平常 21%）。件數沒有增加，業績成長來自「買更貴、更大的組合」，不是多買幾件。</p>
+
+<h2 id="s5">5. 賣得好的品牌與品項</h2>
+<div class="two">
+<div class="tw"><table>
+<tr><th>第一波品牌</th><th>業績（元）</th><th>占比</th><th>平常 2 天</th></tr>
+<tr><td>SHISEIDO 資生堂</td><td>72,370</td><td>26%</td><td class="mute">74,707</td></tr>
+<tr><td>Elizabeth Arden</td><td>14,630</td><td>5%</td><td class="mute">12,097</td></tr>
+<tr><td>LANCOME 蘭蔻</td><td>14,563</td><td>5%</td><td class="mute">7,176</td></tr>
+<tr><td>SK-II</td><td>14,393</td><td>5%</td><td class="mute">3,551</td></tr>
+<tr><td>Diptyque</td><td>13,388</td><td>5%</td><td class="mute">2,722</td></tr>
+<tr><td>Kiehl's 契爾氏</td><td>11,565</td><td>4%</td><td class="mute">10,055</td></tr>
+</table></div>
+<div class="tw"><table>
+<tr><th>第二波品牌</th><th>業績（元）</th><th>占比</th><th>平常 2 天</th></tr>
+<tr><td>SHISEIDO 資生堂</td><td class="red">140,000</td><td>33%</td><td class="mute">74,707</td></tr>
+<tr><td>SK-II</td><td class="red">40,634</td><td>10%</td><td class="mute">3,551</td></tr>
+<tr><td>LA MER 海洋拉娜</td><td class="red">31,661</td><td>7%</td><td class="mute">8,120</td></tr>
+<tr><td>Kiehl's 契爾氏</td><td>24,989</td><td>6%</td><td class="mute">10,055</td></tr>
+<tr><td>cle de peau 肌膚之鑰</td><td>21,683</td><td>5%</td><td class="mute">7,364</td></tr>
+<tr><td>HELENA RUBINSTEIN 赫蓮娜</td><td class="red">18,942</td><td>4%</td><td class="mute">1,694</td></tr>
+</table></div>
+</div>
+<p style="font-size:14px;color:var(--ink2)">「平常 2 天」＝非活動日平均 ×2，用來看有沒有多賣。第一波資生堂跟平常差不多，成長來自蘭蔻、SK-II、Diptyque；第二波資生堂接近翻倍（1.9 倍），SK-II、赫蓮娜是平常的 11 倍，LA MER 是 4 倍。</p>
+<h3>兩波都有賣出的品項：46 個 SKU</h3>
+<p style="font-size:14.5px">第一波賣出 88 個 SKU、第二波 110 個，其中 <b>46 個兩波都有賣出</b>，占第一波業績的 68%（18.5 萬元）、第二波的 56%（24.0 萬元），是兩波共同的核心品項。</p>
+<ol class="pts">
+  <li><b>第二波賣更多：</b>資生堂百優 4 入組（00344045，1→14 組）、Elizabeth Arden 21 天霜 3 入組（00207791，3→12 組）、百優＋山茶花優惠組合（00302080，1→5 組）、雅漾活泉水 4 入組（00213095，3→7 組）、Kiehl's 激光淡斑精華（00210612，3→6 瓶）。</li>
+  <li><b>第二波賣更少：</b>資生堂 ACE 眼霜（00443770，7→1 個）、BIODANCE 膠原蛋白面膜（00518315，9→1 盒）、理膚寶水 B5 修復霜 2 入組（00299974，8→2 組）、資生堂山茶花加贈組（00450517，4→2 組）。</li>
+  <li><b>百優 2 入組（00232440）兩波都是主力：</b>8 組→12 組；但第二波買家改往 4 入組集中，百優 2 入＋4 入合計 9 組→26 組。</li>
+</ol>
+<div class="tw"><table class="num">
+<tr><th>SKU</th><th style="text-align:left">品項</th><th>第一波件數</th><th>第一波業績（元）</th><th>第二波件數</th><th>第二波業績（元）</th></tr>
+<tr><td class="sk">00344045</td><td style="text-align:left">SHISEIDO 資生堂 百優精純乳霜 75ml 4入組(航空版)</td><td>1</td><td>4,999</td><td>14</td><td>64,896</td></tr>
+<tr><td class="sk">00232440</td><td style="text-align:left">SHISEIDO 資生堂 百優精純乳霜 75ml 2入組(航空版)</td><td>8</td><td>20,335</td><td>12</td><td>29,678</td></tr>
+<tr><td class="sk">00210612</td><td style="text-align:left">Kiehl's 契爾氏 激光極淨白淡斑精華 115ml(航空版)</td><td>3</td><td>7,097</td><td>6</td><td>12,192</td></tr>
+<tr><td class="sk">00456922</td><td style="text-align:left">SK-II 光蘊恆璨淨斑精華 75ml(航空版)</td><td>2</td><td>11,338</td><td>1</td><td>5,289</td></tr>
+<tr><td class="sk">00207791</td><td style="text-align:left">Elizabeth Arden 21天霜 75ml 3入組(航空版)</td><td>3</td><td>3,316</td><td>12</td><td>12,554</td></tr>
+<tr><td class="sk">00446375</td><td style="text-align:left">Elizabeth Arden 艾地苯高效橙燦精華2.0 50ml 2入組(航空版)</td><td>4</td><td>8,816</td><td>3</td><td>6,248</td></tr>
+<tr><td class="sk">00302080</td><td style="text-align:left">SHISEIDO 資生堂 百優精純乳霜 75ml+紅妍山茶花修護精華 75ml 優惠組合(航空版)</td><td>1</td><td>2,451</td><td>5</td><td>12,219</td></tr>
+<tr><td class="sk">00389967</td><td style="text-align:left">Diptyque 淡香精 75ml (爵夢/肌膚之華/譚道)(多款任選 航空版)</td><td>2</td><td>9,198</td><td>1</td><td>4,499</td></tr>
+<tr><td class="sk">00228772</td><td style="text-align:left">CHANEL 香奈兒 超炫耀持色唇萃 4.5ml+3.5ml(多款任選 航空版)</td><td>4</td><td>5,811</td><td>5</td><td>6,873</td></tr>
+<tr><td class="sk">00450517</td><td style="text-align:left">SHISEIDO 資生堂 紅妍山茶花修護精華 75ml 加贈10ml*2入(航空版)</td><td>4</td><td>6,980</td><td>2</td><td>3,340</td></tr>
+</table></div>
+<details class="more"><summary>看全部 46 個品項</summary>
+<div class="tw"><table class="num">
+<tr><th>SKU</th><th style="text-align:left">品項</th><th>第一波件數</th><th>第一波業績（元）</th><th>第二波件數</th><th>第二波業績（元）</th></tr>
+<tr><td class="sk">00344045</td><td style="text-align:left">SHISEIDO 資生堂 百優精純乳霜 75ml 4入組(航空版)</td><td>1</td><td>4,999</td><td>14</td><td>64,896</td></tr>
+<tr><td class="sk">00232440</td><td style="text-align:left">SHISEIDO 資生堂 百優精純乳霜 75ml 2入組(航空版)</td><td>8</td><td>20,335</td><td>12</td><td>29,678</td></tr>
+<tr><td class="sk">00210612</td><td style="text-align:left">Kiehl's 契爾氏 激光極淨白淡斑精華 115ml(航空版)</td><td>3</td><td>7,097</td><td>6</td><td>12,192</td></tr>
+<tr><td class="sk">00456922</td><td style="text-align:left">SK-II 光蘊恆璨淨斑精華 75ml(航空版)</td><td>2</td><td>11,338</td><td>1</td><td>5,289</td></tr>
+<tr><td class="sk">00207791</td><td style="text-align:left">Elizabeth Arden 21天霜 75ml 3入組(航空版)</td><td>3</td><td>3,316</td><td>12</td><td>12,554</td></tr>
+<tr><td class="sk">00446375</td><td style="text-align:left">Elizabeth Arden 艾地苯高效橙燦精華2.0 50ml 2入組(航空版)</td><td>4</td><td>8,816</td><td>3</td><td>6,248</td></tr>
+<tr><td class="sk">00302080</td><td style="text-align:left">SHISEIDO 資生堂 百優精純乳霜 75ml+紅妍山茶花修護精華 75ml 優惠組合(航空版)</td><td>1</td><td>2,451</td><td>5</td><td>12,219</td></tr>
+<tr><td class="sk">00389967</td><td style="text-align:left">Diptyque 淡香精 75ml (爵夢/肌膚之華/譚道)(多款任選 航空版)</td><td>2</td><td>9,198</td><td>1</td><td>4,499</td></tr>
+<tr><td class="sk">00228772</td><td style="text-align:left">CHANEL 香奈兒 超炫耀持色唇萃 4.5ml+3.5ml(多款任選 航空版)</td><td>4</td><td>5,811</td><td>5</td><td>6,873</td></tr>
+<tr><td class="sk">00450517</td><td style="text-align:left">SHISEIDO 資生堂 紅妍山茶花修護精華 75ml 加贈10ml*2入(航空版)</td><td>4</td><td>6,980</td><td>2</td><td>3,340</td></tr>
+<tr><td class="sk">00443770</td><td style="text-align:left">SHISEIDO 資生堂 激抗痕亮采緊緻ACE眼霜 15ml(航空版)</td><td>7</td><td>8,932</td><td>1</td><td>1,209</td></tr>
+<tr><td class="sk">00299974</td><td style="text-align:left">LA ROCHE-POSAY 理膚寶水 B5+全面修復霜100ml 2入組 #無盒版(航空版)</td><td>8</td><td>7,707</td><td>2</td><td>1,820</td></tr>
+<tr><td class="sk">00450043</td><td style="text-align:left">ESTEE LAUDER 雅詩蘭黛 特潤超導全方位修護露 100ml 加贈7ml*4入 小棕瓶特惠組(航空版)</td><td>2</td><td>6,142</td><td>1</td><td>2,950</td></tr>
+<tr><td class="sk">00213095</td><td style="text-align:left">Avene 雅漾 舒護活泉水 300ml 四入組(航空版)</td><td>3</td><td>2,997</td><td>7</td><td>6,045</td></tr>
+<tr><td class="sk">00443759</td><td style="text-align:left">SHISEIDO 資生堂 激抗痕亮采緊緻霜(豐潤版) 50ml 拉提神霜(航空版)</td><td>3</td><td>5,134</td><td>2</td><td>3,411</td></tr>
+<tr><td class="sk">00208334</td><td style="text-align:left">YSL 超模光感精華水氣墊 12g(多款任選 航空版)</td><td>3</td><td>4,901</td><td>2</td><td>3,480</td></tr>
+<tr><td class="sk">00427608</td><td style="text-align:left">SHISEIDO 資生堂 紅妍山茶花修護精華 75ml 2入組 小紅瓶(航空版)</td><td>1</td><td>2,999</td><td>2</td><td>5,340</td></tr>
+<tr><td class="sk">00261006</td><td style="text-align:left">Diptyque 淡香精 75ml (玫瑰之水/青蕨/杜桑/希臘無花果/坦博)(多款任選 航空版)</td><td>1</td><td>4,190</td><td>1</td><td>4,090</td></tr>
+<tr><td class="sk">00367374</td><td style="text-align:left">Aesop 詠香水 50ml(航空版)</td><td>1</td><td>3,686</td><td>1</td><td>3,680</td></tr>
+<tr><td class="sk">00231146</td><td style="text-align:left">Guerlain 嬌蘭 皇家蜂王乳平衡油精華 50ml(航空版)</td><td>1</td><td>2,509</td><td>2</td><td>4,799</td></tr>
+<tr><td class="sk">00220857</td><td style="text-align:left">CLARINS 克蘭詩 黃金雙萃精華 50ml(航空版)</td><td>2</td><td>4,674</td><td>1</td><td>2,337</td></tr>
+<tr><td class="sk">00437582</td><td style="text-align:left">cle de peau BEAUTE 肌膚之鑰 光采無瑕妝前凝霜 37ml 2入組(航空版)</td><td>1</td><td>2,232</td><td>2</td><td>4,489</td></tr>
+<tr><td class="sk">00300833</td><td style="text-align:left">SHISEIDO 資生堂 百優精純乳霜 75ml(航空版)</td><td>2</td><td>2,639</td><td>3</td><td>3,970</td></tr>
+<tr><td class="sk">00317342</td><td style="text-align:left">Avene 雅漾 舒護活泉水 300ml 6入組(航空版)</td><td>3</td><td>3,980</td><td>1</td><td>1,360</td></tr>
+<tr><td class="sk">00411658</td><td style="text-align:left">LANCOME 蘭蔻 超未來肌因冰珠亮眼粹 20ml(航空版)</td><td>1</td><td>1,689</td><td>2</td><td>3,340</td></tr>
+<tr><td class="sk">00480407</td><td style="text-align:left">YSL 夢幻冰藍氣墊粉餅 14g(航空版)</td><td>1</td><td>2,584</td><td>1</td><td>2,431</td></tr>
+<tr><td class="sk">00518315</td><td style="text-align:left">BIODANCE 面膜 1盒4入(多款任選 航空版)</td><td>9</td><td>4,448</td><td>1</td><td>499</td></tr>
+<tr><td class="sk">00285222</td><td style="text-align:left">LANCOME 蘭蔻 全新超輕盈UV水凝露 50ml(航空版)</td><td>2</td><td>3,298</td><td>1</td><td>1,567</td></tr>
+<tr><td class="sk">00221401</td><td style="text-align:left">L'Occitane 歐舒丹 草本洗髮乳/潤髮乳 500ml (淨涼/修護/強韌/平衡)(多款任選 航空版)</td><td>4</td><td>3,196</td><td>2</td><td>1,501</td></tr>
+<tr><td class="sk">00372695</td><td style="text-align:left">SK-II 光蘊輕透CC霜 30g SPF 50+ PA++++(公司貨)</td><td>2</td><td>3,055</td><td>1</td><td>1,577</td></tr>
+<tr><td class="sk">00520251</td><td style="text-align:left">BIODANCE 面膜 1盒4入 2入組(多款任選 航空版)</td><td>4</td><td>3,632</td><td>1</td><td>951</td></tr>
+<tr><td class="sk">00488692</td><td style="text-align:left">MALIN+GOETZ 淡香精 50ml (佛手柑/大麻草/草莓)(多款任選  航空版)</td><td>1</td><td>2,290</td><td>1</td><td>2,175</td></tr>
+<tr><td class="sk">00371223</td><td style="text-align:left">SUQQU 晶采柔艷頰彩 6.4g(多款任選 航空版)</td><td>2</td><td>2,633</td><td>1</td><td>1,350</td></tr>
+<tr><td class="sk">00517203</td><td style="text-align:left">AVEDA 肯夢 蘊活煥欣豐盈菁華 150ml (效期2027/11)(航空版)</td><td>1</td><td>1,350</td><td>2</td><td>2,551</td></tr>
+<tr><td class="sk">00466558</td><td style="text-align:left">SHISEIDO 資生堂 保濕潔膚皂 125ml(航空版)</td><td>3</td><td>1,797</td><td>3</td><td>1,722</td></tr>
+<tr><td class="sk">00347973</td><td style="text-align:left">CLARINS 克蘭詩 全效緊緻眼霜 7ml 三入組(航空版)</td><td>1</td><td>840</td><td>3</td><td>2,452</td></tr>
+<tr><td class="sk">00256931</td><td style="text-align:left">LA MER 海洋拉娜 修護唇霜 9g(航空版)</td><td>1</td><td>1,480</td><td>1</td><td>1,480</td></tr>
+<tr><td class="sk">00239059</td><td style="text-align:left">COSME DECORTE 黛珂 UV COMFORT 極效光無痕素顏霜 30ml(多款任選 航空版)</td><td>2</td><td>1,165</td><td>3</td><td>1,791</td></tr>
+<tr><td class="sk">00451879</td><td style="text-align:left">SHISEIDO 資生堂  激抗痕亮采緊緻乳 100ml (輕盈版/豐潤版)(多款任選 航空版)</td><td>1</td><td>1,309</td><td>1</td><td>1,350</td></tr>
+<tr><td class="sk">00371919</td><td style="text-align:left">ACQUA DI PARMA 帕爾瑪之水 藍色地中海系列 桃金孃加州桂 30ml 中性淡香水(航空版)</td><td>1</td><td>1,310</td><td>1</td><td>1,310</td></tr>
+<tr><td class="sk">00302072</td><td style="text-align:left">Elizabeth Arden  21天霜 75ml 2入組(航空版)</td><td>2</td><td>1,700</td><td>1</td><td>850</td></tr>
+<tr><td class="sk">00284605</td><td style="text-align:left">Elizabeth Arden 綠茶香水身體乳 500ml(航空版)</td><td>2</td><td>798</td><td>4</td><td>1,296</td></tr>
+<tr><td class="sk">00507087</td><td style="text-align:left">Aesop 賦活芳香護手霜 75ml 中文字(航空版)</td><td>1</td><td>511</td><td>3</td><td>1,468</td></tr>
+<tr><td class="sk">00217760</td><td style="text-align:left">GIORGIO ARMANI 亞曼尼 高級訂製淡香水花園 7.5ml(多款任選 航空版)</td><td>2</td><td>1,278</td><td>1</td><td>639</td></tr>
+<tr><td class="sk">00480419</td><td style="text-align:left">BYREDO 無人之境淡香精 12ml(航空版)</td><td>1</td><td>821</td><td>1</td><td>818</td></tr>
+<tr><td class="sk">00295980</td><td style="text-align:left">ESTEE LAUDER 雅詩蘭黛 粉持久天生美肌乖乖乳 15ml 4入組(航空版)</td><td>2</td><td>1,020</td><td>1</td><td>411</td></tr>
+</table></div>
+</details>
+<p style="font-size:13px;color:var(--slate);margin-top:6px">依兩波業績合計排序；多款任選的品項只列款式名前的主品名。</p>
+
+<h2 id="s6">6. 購買會員輪廓（277 位不重複會員）</h2>
+<div class="tw"><table>
+<tr><th>項目</th><th>第一波</th><th>第二波</th><th>兩波合計</th></tr>
+<tr><td>購買會員</td><td>123 人</td><td>154 人</td><td>277 人</td></tr>
+<tr><td>兩波都有買</td><td colspan="3" style="text-align:center"><b>0 人</b>（兩波買家完全不重疊）</td></tr>
+<tr><td>每人訂單數</td><td>1.02 張</td><td>1.05 張</td><td>—</td></tr>
+<tr><td>女性／男性</td><td>81.3%／16.3%</td><td>84.4%／13.0%</td><td>83.0%／14.4%</td></tr>
+<tr><td>平均年齡</td><td>45.0 歲</td><td>46.7 歲</td><td>45.9 歲</td></tr>
+<tr><td>主要縣市（前三）</td><td>新北、台北、台中</td><td>台中、新北、高雄</td><td>六都為主</td></tr>
+<tr><td>全支付開通率</td><td>76.4%</td><td>75.3%</td><td>75.8%</td></tr>
+<tr><td>LINE 官方帳號綁定率</td><td>20.3%</td><td>19.5%</td><td>19.9%</td></tr>
+</table></div>
+<h3>年齡分布（兩波合計）</h3>
+<div class="bars">
+  <span>20–29 歲</span><div class="b" style="width:35%"></div><span>9.4%</span>
+  <span>30–39 歲</span><div class="b" style="width:83%"></div><span>22.1%</span>
+  <span>40–49 歲</span><div class="b" style="width:89%"></div><span>23.6%</span>
+  <span>50–59 歲</span><div class="b mx" style="width:100%"></div><span>26.6%</span>
+  <span>60–69 歲</span><div class="b" style="width:47%"></div><span>12.4%</span>
+</div>
+<p style="font-size:13px;color:var(--slate);margin-top:6px">占比以有填年齡的會員計算；未滿 20 歲、70 歲以上合計約 5.9%。</p>
+<ul style="font-size:14px;color:var(--ink2);padding-left:20px">
+  <li><b>兩波買到的是兩批不同的人：</b>第二波 154 人沒有一個是第一波的買家，所以第二波的增量不是第一波客人回購，而是新觸及到的買家。這和第二波 SMS 改發「加車／瀏覽未購」名單的方向一致（實際有多少人來自 SMS，要等 UTM 數字）。</li>
+  <li><b>客群是 30–59 歲、以女性為主：</b>女性占 83%，30–59 歲占 72%，40 歲以上占 63%，平均 46 歲。第二波平均年齡稍高（46.7 歲），也對應到第二波高單價品牌（SK-II、LA MER、赫蓮娜）成長。</li>
+  <li><b>全支付是比 LINE 更有效的觸及管道：</b>全支付開通率 76%，LINE 官方帳號綁定只有 20%。PxPay APP Push 能觸及大部分買家，LINE OA 能觸及的比例有限。</li>
+  <li><b>地區：</b>第二波台中、高雄的占比上升，第一波則以雙北為主。</li>
+</ul>
+<div class="callout warn"><b>品牌、通路占比只當參考：</b>原始輪廓分析也列了這群會員的品牌與通路占比（例如第一波資生堂 13.5%、善美的 11.8%，通路電商 62.5%、超市 31.9%）。這些數字包含超市、量販和非跨境品牌，看起來是這群會員在其他期間或其他通路的消費，範圍沒有說明，所以沒有拿來和第 5 段的活動購買比較。</div>
+
+<h2 id="s7">7. 時段：第二波推播後下午多賣 4.9 萬元，第一波推播後沒有反應</h2>
+<div class="chart">
+  <div class="legend"><span><i style="background:#9e9e9e"></i>非活動週四平均（10/1、10/8）</span><span><i style="background:var(--blue-4)"></i>10/15 第一波</span><span><i style="background:var(--blue)"></i>10/22 第二波</span><span style="color:var(--slate)">直線＝發送時間：SMS 12:00、PxPay 14:00、PxGo 14:00（第一波）／19:00（第二波）</span></div>
+  <svg id="hourly" viewBox="0 0 1000 280" width="100%" role="img" aria-label="跨境週四每小時業績比較"></svg>
+  <div class="tip" id="tip2" hidden></div>
+</div>
+<ol class="pts">
+  <li><b>推播後下午：</b>第二波 12–17 點 8.6 萬元，比平常週四 3.7 萬元多 4.9 萬元，占全天增量的 45%；第一波同時段 3.2 萬元，沒有增加。</li>
+  <li><b>推播前就有增量：</b>兩波在 0–11 點各多 2–3 萬元，這段還沒發推播，不是推播帶來的。推測是券上線後站內客人直接使用，或週四美妝日的流量。</li>
+  <li><b>晚間是平常的高峰：</b>非活動週四 18–23 點就有 7.2 萬元，兩波再多 2.5–3.9 萬元。第二波 20 點單小時 4.4 萬元最高，在 PxGo 19:00 推播後一小時；但 PxGo 的 UTM D+1 收益只有 9,006 元（7 張），推播直接帶來的有限，20 點高點主要還是平常晚間高峰加上活動券。</li>
+</ol>
+<p style="font-size:13px;color:var(--slate)">第二波同一天也是會員日。PxPay 14:00 推播的 UTM D+1 收益 5.0 萬元，和下午增量 4.9 萬元同量級，但 D+1 包含隔天，沒辦法拆到小時；SMS 12:00 的 UTM 數字仍待行銷回填。</p>
+
+
+<h2 id="s8">8. 商品轉換率漏斗（APM）：第二波加車多了六成，但加車後的購買率下降</h2>
+<div class="tw"><table>
+<tr><th>專櫃美妝</th><th>SKU 數</th><th>瀏覽</th><th>加車</th><th>購買</th><th>加車率</th><th>車後購買率</th><th>成交率</th><th>每次瀏覽收益（元）</th></tr>
+<tr><td>第一波｜跨境豐收</td><td>247</td><td>5,127</td><td>606</td><td>156</td><td>11.8%</td><td class="red">25.7%</td><td class="red">3.0%</td><td class="red">52.6</td></tr>
+<tr><td>第一波｜其他專櫃美妝</td><td>895</td><td>6,488</td><td>803</td><td>156</td><td>12.4%</td><td>19.4%</td><td>2.4%</td><td>44.4</td></tr>
+<tr class="sep"><td>第二波｜跨境豐收</td><td>272</td><td>7,350</td><td>975</td><td>175</td><td class="red">13.3%</td><td class="red">17.9%</td><td class="red">2.4%</td><td class="red">55.2</td></tr>
+<tr><td>第二波｜其他專櫃美妝</td><td>880</td><td>8,858</td><td>1,047</td><td>171</td><td>11.8%</td><td>16.3%</td><td>1.9%</td><td>34.1</td></tr>
+</table></div>
+<h3>兩波重複品項的轉換（第二波 APM）</h3>
+<p style="font-size:14.5px">第 5 段的 46 個重複品項，占第二波跨境瀏覽和收益各 55%。加車後購買率 18.2%，和其他品項的 17.0% 差不多，差別在個別品項：</p>
+<div class="tw"><table class="num">
+<tr><th>分類</th><th>SKU</th><th style="text-align:left">品項</th><th>瀏覽</th><th>加車</th><th>購買</th><th>車後購買率</th></tr>
+<tr><td rowspan="4" style="vertical-align:middle;color:var(--ink)"><b>轉換好</b></td><td class="sk">00207791</td><td style="text-align:left">Elizabeth Arden 21 天霜 75ml 3 入組</td><td>240</td><td>48</td><td>12</td><td>25%</td></tr>
+<tr><td class="sk">00344045</td><td style="text-align:left">資生堂 百優精純乳霜 75ml 4 入組</td><td>446</td><td>73</td><td>13</td><td>18%</td></tr>
+<tr><td class="sk">00213095</td><td style="text-align:left">雅漾 舒護活泉水 300ml 4 入組</td><td>214</td><td>36</td><td>7</td><td>19%</td></tr>
+<tr><td class="sk">00302080</td><td style="text-align:left">資生堂 百優＋紅妍山茶花 優惠組合</td><td>35</td><td>7</td><td>5</td><td>71%</td></tr>
+<tr class="sep"><td rowspan="4" style="vertical-align:middle;color:var(--ink)"><b>轉換差</b></td><td class="sk">00450517</td><td style="text-align:left">資生堂 紅妍山茶花精華 75ml 加贈組</td><td>770</td><td>63</td><td>2</td><td>3%</td></tr>
+<tr><td class="sk">00232440</td><td style="text-align:left">資生堂 百優精純乳霜 75ml 2 入組</td><td>563</td><td>75</td><td>10</td><td>13%</td></tr>
+<tr><td class="sk">00239059</td><td style="text-align:left">黛珂 UV 極效光無痕素顏霜 30ml</td><td>86</td><td>16</td><td>0</td><td>0%</td></tr>
+<tr><td class="sk">00221401</td><td style="text-align:left">歐舒丹 草本洗髮乳／潤髮乳 500ml</td><td>10</td><td>10</td><td>0</td><td>0%</td></tr>
+</table></div>
+<details class="more"><summary>看 46 個重複品項的 APM 明細</summary>
+<div class="tw"><table class="num">
+<tr><th>SKU</th><th style="text-align:left">品項</th><th>瀏覽</th><th>加車</th><th>購買</th><th>車後購買率</th></tr>
+<tr><td class="sk">00450517</td><td style="text-align:left">SHISEIDO 資生堂 紅妍山茶花修護精華 75ml 加贈10ml*2入(航空版)</td><td>770</td><td>63</td><td>2</td><td>3%</td></tr>
+<tr><td class="sk">00232440</td><td style="text-align:left">SHISEIDO 資生堂 百優精純乳霜 75ml 2入組(航空版)</td><td>563</td><td>75</td><td>10</td><td>13%</td></tr>
+<tr><td class="sk">00344045</td><td style="text-align:left">SHISEIDO 資生堂 百優精純乳霜 75ml 4入組(航空版)</td><td>446</td><td>73</td><td>13</td><td>18%</td></tr>
+<tr><td class="sk">00446375</td><td style="text-align:left">Elizabeth Arden 艾地苯高效橙燦精華2.0 50ml 2入組(航空版)</td><td>260</td><td>16</td><td>3</td><td>19%</td></tr>
+<tr><td class="sk">00228772</td><td style="text-align:left">CHANEL 香奈兒 超炫耀持色唇萃 4.5ml+3.5ml(多款任選 航空版)</td><td>245</td><td>41</td><td>5</td><td>12%</td></tr>
+<tr><td class="sk">00207791</td><td style="text-align:left">Elizabeth Arden 21天霜 75ml 3入組(航空版)</td><td>240</td><td>48</td><td>12</td><td>25%</td></tr>
+<tr><td class="sk">00213095</td><td style="text-align:left">Avene 雅漾 舒護活泉水 300ml 四入組(航空版)</td><td>214</td><td>36</td><td>7</td><td>19%</td></tr>
+<tr><td class="sk">00299974</td><td style="text-align:left">LA ROCHE-POSAY 理膚寶水 B5+全面修復霜100ml 2入組 #無盒版(航空版)</td><td>141</td><td>21</td><td>2</td><td>10%</td></tr>
+<tr><td class="sk">00208334</td><td style="text-align:left">YSL 超模光感精華水氣墊 12g(多款任選 航空版)</td><td>136</td><td>11</td><td>2</td><td>18%</td></tr>
+<tr><td class="sk">00210612</td><td style="text-align:left">Kiehl's 契爾氏 激光極淨白淡斑精華 115ml(航空版)</td><td>132</td><td>14</td><td>6</td><td>43%</td></tr>
+<tr><td class="sk">00443759</td><td style="text-align:left">SHISEIDO 資生堂 激抗痕亮采緊緻霜(豐潤版) 50ml 拉提神霜(航空版)</td><td>127</td><td>17</td><td>1</td><td>6%</td></tr>
+<tr><td class="sk">00300833</td><td style="text-align:left">SHISEIDO 資生堂 百優精純乳霜 75ml(航空版)</td><td>127</td><td>9</td><td>3</td><td>33%</td></tr>
+<tr><td class="sk">00518315</td><td style="text-align:left">BIODANCE 面膜 1盒4入(多款任選 航空版)</td><td>119</td><td>9</td><td>1</td><td>11%</td></tr>
+<tr><td class="sk">00450043</td><td style="text-align:left">ESTEE LAUDER 雅詩蘭黛 特潤超導全方位修護露 100ml 加贈7ml*4入 小棕瓶特惠組(航空版)</td><td>86</td><td>5</td><td>1</td><td>20%</td></tr>
+<tr><td class="sk">00239059</td><td style="text-align:left">COSME DECORTE 黛珂 UV COMFORT 極效光無痕素顏霜 30ml(多款任選 航空版)</td><td>86</td><td>16</td><td>0</td><td>0%</td></tr>
+<tr><td class="sk">00427608</td><td style="text-align:left">SHISEIDO 資生堂 紅妍山茶花修護精華 75ml 2入組 小紅瓶(航空版)</td><td>80</td><td>16</td><td>2</td><td>12%</td></tr>
+<tr><td class="sk">00437582</td><td style="text-align:left">cle de peau BEAUTE 肌膚之鑰 光采無瑕妝前凝霜 37ml 2入組(航空版)</td><td>73</td><td>5</td><td>2</td><td>40%</td></tr>
+<tr><td class="sk">00443770</td><td style="text-align:left">SHISEIDO 資生堂 激抗痕亮采緊緻ACE眼霜 15ml(航空版)</td><td>52</td><td>9</td><td>1</td><td>11%</td></tr>
+<tr><td class="sk">00371919</td><td style="text-align:left">ACQUA DI PARMA 帕爾瑪之水 藍色地中海系列 桃金孃加州桂 30ml 中性淡香水(航空版)</td><td>52</td><td>3</td><td>1</td><td>33%</td></tr>
+<tr><td class="sk">00389967</td><td style="text-align:left">Diptyque 淡香精 75ml (爵夢/肌膚之華/譚道)(多款任選 航空版)</td><td>45</td><td>7</td><td>1</td><td>14%</td></tr>
+<tr><td class="sk">00347973</td><td style="text-align:left">CLARINS 克蘭詩 全效緊緻眼霜 7ml 三入組(航空版)</td><td>45</td><td>17</td><td>3</td><td>18%</td></tr>
+<tr><td class="sk">00488692</td><td style="text-align:left">MALIN+GOETZ 淡香精 50ml (佛手柑/大麻草/草莓)(多款任選  航空版)</td><td>42</td><td>3</td><td>1</td><td>33%</td></tr>
+<tr><td class="sk">00220857</td><td style="text-align:left">CLARINS 克蘭詩 黃金雙萃精華 50ml(航空版)</td><td>40</td><td>7</td><td>1</td><td>14%</td></tr>
+<tr><td class="sk">00451879</td><td style="text-align:left">SHISEIDO 資生堂  激抗痕亮采緊緻乳 100ml (輕盈版/豐潤版)(多款任選 航空版)</td><td>40</td><td>4</td><td>1</td><td>25%</td></tr>
+<tr><td class="sk">00411658</td><td style="text-align:left">LANCOME 蘭蔻 超未來肌因冰珠亮眼粹 20ml(航空版)</td><td>39</td><td>8</td><td>2</td><td>25%</td></tr>
+<tr><td class="sk">00517203</td><td style="text-align:left">AVEDA 肯夢 蘊活煥欣豐盈菁華 150ml (效期2027/11)(航空版)</td><td>39</td><td>5</td><td>2</td><td>40%</td></tr>
+<tr><td class="sk">00302080</td><td style="text-align:left">SHISEIDO 資生堂 百優精純乳霜 75ml+紅妍山茶花修護精華 75ml 優惠組合(航空版)</td><td>35</td><td>7</td><td>5</td><td>71%</td></tr>
+<tr><td class="sk">00295980</td><td style="text-align:left">ESTEE LAUDER 雅詩蘭黛 粉持久天生美肌乖乖乳 15ml 4入組(航空版)</td><td>32</td><td>7</td><td>1</td><td>14%</td></tr>
+<tr><td class="sk">00261006</td><td style="text-align:left">Diptyque 淡香精 75ml (玫瑰之水/青蕨/杜桑/希臘無花果/坦博)(多款任選 航空版)</td><td>30</td><td>5</td><td>1</td><td>20%</td></tr>
+<tr><td class="sk">00480407</td><td style="text-align:left">YSL 夢幻冰藍氣墊粉餅 14g(航空版)</td><td>30</td><td>1</td><td>1</td><td>100%</td></tr>
+<tr><td class="sk">00217760</td><td style="text-align:left">GIORGIO ARMANI 亞曼尼 高級訂製淡香水花園 7.5ml(多款任選 航空版)</td><td>30</td><td>9</td><td>1</td><td>11%</td></tr>
+<tr><td class="sk">00456922</td><td style="text-align:left">SK-II 光蘊恆璨淨斑精華 75ml(航空版)</td><td>26</td><td>5</td><td>1</td><td>20%</td></tr>
+<tr><td class="sk">00231146</td><td style="text-align:left">Guerlain 嬌蘭 皇家蜂王乳平衡油精華 50ml(航空版)</td><td>23</td><td>4</td><td>2</td><td>50%</td></tr>
+<tr><td class="sk">00367374</td><td style="text-align:left">Aesop 詠香水 50ml(航空版)</td><td>22</td><td>4</td><td>1</td><td>25%</td></tr>
+<tr><td class="sk">00466558</td><td style="text-align:left">SHISEIDO 資生堂 保濕潔膚皂 125ml(航空版)</td><td>22</td><td>7</td><td>3</td><td>43%</td></tr>
+<tr><td class="sk">00317342</td><td style="text-align:left">Avene 雅漾 舒護活泉水 300ml 6入組(航空版)</td><td>21</td><td>6</td><td>1</td><td>17%</td></tr>
+<tr><td class="sk">00507087</td><td style="text-align:left">Aesop 賦活芳香護手霜 75ml 中文字(航空版)</td><td>21</td><td>7</td><td>3</td><td>43%</td></tr>
+<tr><td class="sk">00302072</td><td style="text-align:left">Elizabeth Arden  21天霜 75ml 2入組(航空版)</td><td>20</td><td>3</td><td>1</td><td>33%</td></tr>
+<tr><td class="sk">00520251</td><td style="text-align:left">BIODANCE 面膜 1盒4入 2入組(多款任選 航空版)</td><td>17</td><td>10</td><td>1</td><td>10%</td></tr>
+<tr><td class="sk">00284605</td><td style="text-align:left">Elizabeth Arden 綠茶香水身體乳 500ml(航空版)</td><td>17</td><td>6</td><td>4</td><td>67%</td></tr>
+<tr><td class="sk">00256931</td><td style="text-align:left">LA MER 海洋拉娜 修護唇霜 9g(航空版)</td><td>16</td><td>2</td><td>1</td><td>50%</td></tr>
+<tr><td class="sk">00372695</td><td style="text-align:left">SK-II 光蘊輕透CC霜 30g SPF 50+ PA++++(公司貨)</td><td>12</td><td>3</td><td>1</td><td>33%</td></tr>
+<tr><td class="sk">00221401</td><td style="text-align:left">L'Occitane 歐舒丹 草本洗髮乳/潤髮乳 500ml (淨涼/修護/強韌/平衡)(多款任選 航空版)</td><td>10</td><td>10</td><td>0</td><td>0%</td></tr>
+<tr><td class="sk">00371223</td><td style="text-align:left">SUQQU 晶采柔艷頰彩 6.4g(多款任選 航空版)</td><td>9</td><td>1</td><td>1</td><td>100%</td></tr>
+<tr><td class="sk">00480419</td><td style="text-align:left">BYREDO 無人之境淡香精 12ml(航空版)</td><td>7</td><td>1</td><td>1</td><td>100%</td></tr>
+<tr><td class="sk">00285222</td><td style="text-align:left">LANCOME 蘭蔻 全新超輕盈UV水凝露 50ml(航空版)</td><td>4</td><td>0</td><td>1</td><td>—</td></tr>
+</table></div>
+</details>
+<details class="more"><summary>第二波四種商品分群（跨境全部 364 SKU）</summary>
+<div class="tw"><table class="txt">
+<tr><th>分群</th><th>代表品項（瀏覽／加車／購買）</th></tr>
+<tr><td><b>高瀏覽、低成交</b></td><td>資生堂紅妍山茶花精華 75ml 加贈組（770／63／2，瀏覽第一）、LA MER 經典乳霜 60ml（187／59／2）、Elizabeth Arden 橙燦精華 2 入組（260／16／3）</td></tr>
+<tr><td><b>加車後沒買</b></td><td>LA MER 護手霜 30ml（13／17／0）、黛珂素顏霜（86／16／0）、LA MER 經典乳霜 7ml 5 入組（148／14／0）、SALT &amp; STONE 體香膏（43／13／0）、歐舒丹洗潤髮乳（10／10／0）</td></tr>
+<tr><td><b>資生堂百優</b></td><td>2 入組（563／75／10，車後 13.3%）、4 入組（446／73／13，車後 17.8%）</td></tr>
+<tr><td><b>低瀏覽、高成交</b></td><td>SK-II 青春露＋活膚霜組（19／7／2，1.9 萬元）、Kiehl's 淡斑精華 2 入組（39／6／3）、百優＋山茶花優惠組（35／7／5）、SK-II 活膚霜 100g（38／14／2）</td></tr>
+</table></div>
+<p style="font-size:14px;color:var(--ink2)">集中度：瀏覽前 10 名的 SKU 占跨境瀏覽的 40%，收益前 10 名占 46%；有購買的 SKU 108 個（占 30%，第一波 26%）。</p>
+</details>
+<details class="more"><summary>第一波四種商品分群</summary>
+<div class="tw"><table class="txt">
+<tr><th>分群</th><th>代表品項（瀏覽／加車／購買）</th></tr>
+<tr><td><b>高瀏覽、低成交</b></td><td>LA MER 經典乳霜 7ml 5 入組（500／9／2）、資生堂山茶花精華 加贈組（286／16／4）、YSL 超模光感氣墊（246／16／3）、肌膚之鑰妝前凝霜 37ml（178／13／1）</td></tr>
+<tr><td><b>加車多、車後購買低</b></td><td>資生堂百優 2 入組（51／9，17.6%）、資生堂拉提神霜（21／3）、山茶花小紅瓶（19／1）、Kiehl's 激光三酸（15／1）</td></tr>
+<tr><td><b>有加車、0 購買</b></td><td>雅詩蘭黛粉持久粉底（11 次加車）、ALBION 健康化妝水、資生堂紅色活酵超導奇蹟露、Kiehl's 冰河保濕霜、山茶花 10ml 10 入組（各 6 次）</td></tr>
+<tr><td><b>低瀏覽、高成交</b></td><td>SK-II 淨斑精華（18／5／4，2.3 萬元）、PRADA 凍唇釉（11／18／12，1.9 萬元）、LA MER 護手霜（15／23／24）、蘭蔻永生玫瑰眼霜（26／11／4）</td></tr>
+</table></div>
+</details>
+
+<h2 id="s9">9. Insight</h2>
+<ol class="ins">
+  <li><b class="t">第二波明顯比第一波強，週五撐得住有三個原因</b>第二波兩天比基準多 20.9 萬元（+96%），扣掉會員日後保守估計 12–15 萬元，是第一波 5.6 萬元的 2–3 倍。週五 10/23 跨境 18.6 萬元，第一波週五只有 9.4 萬元：<br>① <b>雙重折扣：</b>全站「購物車滿 1500 折抵 100 元」10/23 起每天大量使用，可以和跨境券疊。當天跨境滿 1,500 的 45 張訂單中，37 張整張折扣 ≥ 200 元；第一波週五只有 3 張，10/24–10/26 只剩全站券時每天 5–8 張。<br>② <b>最後一天：</b>SMS 文案寫「只到 10/23」，當天 21–23 點跨境 6.0 萬元，占全天 32%；第一波週五同時段 1.4 萬元。<br>③ <b>前一天加車的人回來結帳（推測）：</b>第二波 APM 加車比第一波多 61%，週四加車沒結帳的人，隔天還能用券。</li>
+  <li><b class="t">增量來自高單價，不是多買幾件</b>第二波平均原價 2,871 元（平常 2,122 元），3,000 元以上的訂單占 33%（平常 21%），每張件數持平；部分原因是第二波券可以累折，3,000 元以上能多折 200 元以上。資生堂百優 4 入組 14 組、6.5 萬元，SK-II、LA MER、赫蓮娜都是平常的 4–11 倍。</li>
+  <li><b class="t">第二波帶回加車，但結帳變難</b>APM 顯示跨境加車多了 61%，加車率 13.3% 高於同業，表示加車／瀏覽未購名單有被叫回來；但車後購買率從 25.7% 降到 17.9%。山茶花加贈組（63 次加車、2 件購買）、LA MER 護手霜（17 次加車、0 購買）是主要流失點，雙 11 前先查價格與庫存。</li>
+  <li><b class="t">兩波買家零重疊，277 人可以當雙 11 再行銷名單</b>兩波各自觸及一批買家（123 人、154 人），每人約買 1 張。這群人以 30–59 歲女性為主、76% 開通全支付。雙 11 可以對這 277 人推資生堂大包裝、ACE 眼霜等延伸品，管道以 PxPay 優先（名單能否匯出投放待確認）。</li>
+</ol>
+
+<footer>
+<ul>
+  <li>業績：全站日報每日訂單明細（10/1–10/26），用跨境廠商訂單明細（2026-10-27 下載）的 tscode 對出跨境品項，業績＝實際訂單金額，日期以下單時間為準。兩份明細的 tscode 100% 對得上。</li>
+  <li>用券：BI「Sales／廠商活動_現折公版報表」，PMC0026120（10/15–10/16）、PMC0026640（10/22–10/25），只算已成立、不含取消的訂單，金額已扣退貨。疊券、整單折扣與折扣率用這些訂單對全站日報訂單明細的整張訂單計算。全站日報券檔第一波記 73 次，比 BI 多 1 次，推測是取消或退貨單。</li>
+  <li>原價滿 1,500 元：跨境品項的單價 × 數量加總，排除數量 0 的取消列。</li>
+  <li>非活動日基準改用 10/1–10/26 的 17 天（第一版用 10/1–10/18 的 13 天，日均 10.58 萬元），所以第一波增量從 6.2 萬元更新成 5.6 萬元、投報從 8.5 倍更新成 7.7 倍。</li>
+  <li>增量和投報都是和基準日比出來的推估，沒有排除其他因素。10/22 的「限時特降價」是兩張家電小B 大單用的，和跨境無關。</li>
+  <li>會員輪廓：Angel 提供的「跨境豐收 277 位會員受眾輪廓分析」（2026-10-27），人數、性別、年齡、縣市、全支付與 LINE 綁定率照原文；原文「30–59 歲女性超過 80%」更正為女性 83%、30–59 歲 72%。</li>
+  <li>第二波 APM：「購物行為轉換率 by 商品」（Angel 2026-10-27 提供，跨境 SKU 收益 44.6 萬元，Angel 確認為 10/22–10/23）。第一波 APM 原檔已被同名新檔覆蓋，所以重複品項只看第二波的轉換。APM 購買數可能是件數，和訂單張數口徑不同。</li>
+  <li>第一波 SMS／APP Push：自媒體版位商品曝光提報_2026年new（campaign 1015_10-2_THRoute、1015_10-1_THRoute），點擊、訂單、收益為 D+1。第一波 APM：「購物行為轉換率 by 商品」10/15–10/16（2026-10-19 下載）。</li>
+</ul>
+</footer>
+</div>
+
+<script>
+(function(){
+  var nav=document.getElementById('snav'),links=[].slice.call(nav.querySelectorAll('a')),hs=links.map(function(a){return document.querySelector(a.getAttribute('href'))});
+  function upd(){var cur=0;hs.forEach(function(h,i){if(h.getBoundingClientRect().top<90)cur=i});
+    links.forEach(function(a,i){a.classList.toggle('on',i===cur)});
+    var on=links[cur];if(on.offsetLeft<nav.scrollLeft||on.offsetLeft+on.offsetWidth>nav.scrollLeft+nav.clientWidth)nav.scrollLeft=on.offsetLeft-16;}
+  window.addEventListener('scroll',upd,{passive:true});upd();
+})();
+(function(){
+  var ns='http://www.w3.org/2000/svg';
+  function mk(svg){return function(n,a){var e=document.createElementNS(ns,n);for(var k in a)e.setAttribute(k,a[k]);svg.appendChild(e);return e}}
+  function bindTip(hit,svg,tip,html){
+    hit.addEventListener('mousemove',function(e){
+      var box=svg.parentNode.getBoundingClientRect();
+      tip.innerHTML=html;tip.hidden=false;
+      var lx=e.clientX-box.left+14; if(lx>box.width-180)lx=e.clientX-box.left-180;
+      tip.style.left=lx+'px';tip.style.top=(e.clientY-box.top-10)+'px';
+    });
+    hit.addEventListener('mouseleave',function(){tip.hidden=true});
+  }
+
+  var d=[["10/1",123851,60],["10/2",70093,41],["10/3",143165,67],["10/4",127307,44],["10/5",51824,27],["10/6",85688,46],["10/7",153336,80],["10/8",140115,73],["10/9",169114,90],["10/10",222910,94],["10/11",125425,61],["10/12",80930,45],["10/13",77835,37],["10/14",153097,85],["10/15",179510,72],["10/16",94266,53],["10/17",111809,48],["10/18",84531,51],["10/19",88652,46],["10/20",130642,77],["10/21",171216,92],["10/22",240891,94],["10/23",186074,67],["10/24",120233,65],["10/25",125064,61],["10/26",142586,63]];
+  var w1={"10/15":1,"10/16":1},w2={"10/22":1,"10/23":1},big={"10/7":"全站大檔","10/9":"全站大檔","10/10":"全站大檔","10/20":"會員日","10/21":"會員日"};
+  var svg=document.getElementById('daily'),tip=document.getElementById('tip'),el=mk(svg);
+  var L=56,R=12,T=24,B=40,W=1000,H=300,max=250000,pw=(W-L-R)/d.length,bw=pw*0.6;
+  function y(v){return T+(H-T-B)*(1-v/max)}
+  [0,50000,100000,150000,200000,250000].forEach(function(v){
+    el('line',{x1:L,x2:W-R,y1:y(v),y2:y(v),stroke:v?'#eee':'#bdbdbd','stroke-width':1});
+    var t=el('text',{x:L-8,y:y(v)+4,'text-anchor':'end','font-size':12,fill:'#757575'});t.textContent=v?(v/10000)+'萬':'0';
+  });
+  var base=108953;
+  el('line',{x1:L,x2:W-R,y1:y(base),y2:y(base),stroke:'#757575','stroke-width':1.5,'stroke-dasharray':'5 4'});
+  d.forEach(function(r,i){
+    var x=L+i*pw+(pw-bw)/2,a=w1[r[0]],b=w2[r[0]],g=big[r[0]];
+    var fill=b?'#13227f':a?'#3d4fa0':g?'#e0e0e0':'#c5cae9';
+    var path='M'+x+','+y(0)+'V'+(y(r[1])+3)+'q0,-3 3,-3h'+(bw-6)+'q3,0 3,3V'+y(0)+'z';
+    el('path',{d:path,fill:fill});
+    var lb=el('text',{x:L+i*pw+pw/2,y:H-B+18,'text-anchor':'middle','font-size':11,fill:(a||b)?'#13227f':'#757575','font-weight':(a||b)?700:400});lb.textContent=r[0].replace('10/','');
+    if(a||b){var v=el('text',{x:L+i*pw+pw/2,y:y(r[1])-6,'text-anchor':'middle','font-size':11,fill:'#1a1a1a','font-weight':700});v.textContent=(r[1]/10000).toFixed(1);}
+    var hit=el('rect',{x:L+i*pw,y:T,width:pw,height:H-T-B,fill:'transparent'});
+    bindTip(hit,svg,tip,'<b>'+r[0]+'</b>'+(a?'（第一波）':b?'（第二波）':g?'（'+g+'）':'')+'<br>業績 '+r[1].toLocaleString()+' 元<br>訂單 '+r[2]+' 張');
+  });
+  var ax=el('text',{x:W-R,y:H-4,'text-anchor':'end','font-size':11,fill:'#757575'});ax.textContent='10 月（日）｜長條上數字＝萬元';
+
+  var hb=[4527,1250,575,0,0,0,752,1794,379,7166,798,6019,3676,2831,9540,4666,13574,2249,4575,4690,8332,12568,20232,21786];
+  var h15=[2975,5149,0,2996,0,0,4698,0,16750,8784,0,9061,5449,7522,3726,11190,3427,1092,12208,3685,8474,29815,16220,26289];
+  var h22=[1875,8712,0,0,0,0,1111,0,2119,2565,16550,10766,10816,24538,15203,20818,14243,0,13053,10701,44425,23247,6658,13491];
+  var s2=document.getElementById('hourly'),tip2=document.getElementById('tip2'),e2=mk(s2);
+  var L2=56,R2=12,T2=20,B2=36,W2=1000,H2=280,m2=50000,step=(W2-L2-R2)/24;
+  function y2(v){return T2+(H2-T2-B2)*(1-v/m2)}
+  function x2(h){return L2+step*h+step/2}
+  [0,10000,20000,30000,40000,50000].forEach(function(v){
+    e2('line',{x1:L2,x2:W2-R2,y1:y2(v),y2:y2(v),stroke:v?'#eee':'#bdbdbd','stroke-width':1});
+    var t=e2('text',{x:L2-8,y:y2(v)+4,'text-anchor':'end','font-size':12,fill:'#757575'});t.textContent=v?(v/10000)+'萬':'0';
+  });
+  [[12,'SMS'],[14,'PxPay'],[19,'PxGo(二)']].forEach(function(m){
+    e2('line',{x1:x2(m[0])-step/2,x2:x2(m[0])-step/2,y1:T2,y2:H2-B2,stroke:'#e40011','stroke-width':1,'stroke-dasharray':'3 3'});
+    var t=e2('text',{x:x2(m[0])-step/2+3,y:T2+10,'font-size':11,fill:'#e40011'});t.textContent=m[1];
+  });
+  [[hb,'#9e9e9e',2,'4 3'],[h15,'#c5cae9',2.5,''],[h22,'#13227f',2.5,'']].forEach(function(s){
+    var p=s[0].map(function(v,h){return (h?'L':'M')+x2(h)+','+y2(v)}).join('');
+    var a={d:p,fill:'none',stroke:s[1],'stroke-width':s[2],'stroke-linejoin':'round'};if(s[3])a['stroke-dasharray']=s[3];
+    e2('path',a);
+  });
+  for(var h=0;h<24;h++){
+    if(h%2===0){var t=e2('text',{x:x2(h),y:H2-B2+18,'text-anchor':'middle','font-size':11,fill:'#757575'});t.textContent=h+'時';}
+    var hit=e2('rect',{x:L2+step*h,y:T2,width:step,height:H2-T2-B2,fill:'transparent'});
+    bindTip(hit,s2,tip2,'<b>'+h+':00–'+h+':59</b><br>非活動週四 '+hb[h].toLocaleString()+' 元<br>10/15 '+h15[h].toLocaleString()+' 元<br>10/22 '+h22[h].toLocaleString()+' 元');
+  }
+})();
+</script>
+</body>
+</html>

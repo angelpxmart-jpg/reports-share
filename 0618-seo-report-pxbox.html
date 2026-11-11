@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>網站 SEO / GEO 健診報告</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+    background: #f5f6fa; color: #1a1a2e; font-size: 14px; line-height: 1.6;
+  }
+  .page {
+    max-width: 860px; margin: 32px auto; background: #fff;
+    border-radius: 12px; box-shadow: 0 2px 16px rgba(0,0,0,0.08); overflow: hidden;
+  }
+  .header { background: #1a1a2e; color: #fff; padding: 32px 40px 28px; }
+  .header-top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; }
+  .report-label { font-size: 11px; letter-spacing: 2px; color: #8899bb; text-transform: uppercase; margin-bottom: 6px; }
+  .brand-name { font-size: 26px; font-weight: 700; }
+  .brand-url { font-size: 13px; color: #8899bb; margin-top: 4px; }
+  .report-meta { text-align: right; font-size: 12px; color: #8899bb; line-height: 1.8; }
+  .score-bar {
+    background: #f0f2f8; padding: 20px 40px; display: flex; gap: 16px;
+    align-items: center; border-bottom: 1px solid #e4e8f0; flex-wrap: wrap;
+  }
+  .score-label { font-size: 12px; color: #666; white-space: nowrap; }
+  .score-pills { display: flex; gap: 10px; flex-wrap: wrap; }
+  .pill { display: inline-flex; align-items: center; gap: 6px; padding: 5px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; }
+  .pill.good { background: #e8f5e9; color: #2e7d32; }
+  .pill.warn { background: #fff8e1; color: #f57f17; }
+  .pill.bad  { background: #fce4ec; color: #c62828; }
+  .pill-dot { width: 7px; height: 7px; border-radius: 50%; }
+  .pill.good .pill-dot { background: #2e7d32; }
+  .pill.warn .pill-dot { background: #f57f17; }
+  .pill.bad  .pill-dot { background: #c62828; }
+  .body { padding: 32px 40px; }
+  .section { margin-bottom: 32px; }
+  .section-title {
+    font-size: 13px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+    color: #8899bb; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid #e4e8f0;
+  }
+  .checklist { display: flex; flex-direction: column; gap: 8px; }
+  .check-row {
+    display: flex; align-items: center; gap: 12px; padding: 10px 14px;
+    border-radius: 8px; background: #f9fafc; border: 1px solid #edf0f7;
+  }
+  .check-icon { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; }
+  .check-icon.ok { background: #e8f5e9; color: #2e7d32; }
+  .check-icon.ng { background: #fce4ec; color: #c62828; }
+  .check-icon.warn { background: #fff8e1; color: #f57f17; }
+  .check-icon.na { background: #f3f4f6; color: #9ca3af; }
+  .check-name { font-size: 13px; font-weight: 600; flex: 0 0 180px; color: #1a1a2e; }
+  .check-note { font-size: 12px; color: #555; flex: 1; }
+  .check-tag { font-size: 11px; padding: 2px 8px; border-radius: 4px; white-space: nowrap; flex-shrink: 0; }
+  .check-tag.ok   { background: #e8f5e9; color: #2e7d32; }
+  .check-tag.ng   { background: #fce4ec; color: #c62828; }
+  .check-tag.warn { background: #fff8e1; color: #f57f17; }
+  .check-tag.na   { background: #f3f4f6; color: #9ca3af; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .finding-box { border-radius: 8px; padding: 16px 18px; border-left: 4px solid; margin-bottom: 10px; }
+  .finding-box.critical { background: #fff5f5; border-color: #e53e3e; }
+  .finding-box.improve  { background: #fffbeb; border-color: #d97706; }
+  .finding-box.good     { background: #f0fff4; border-color: #38a169; }
+  .finding-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+  .finding-box.critical .finding-title { color: #c53030; }
+  .finding-box.improve  .finding-title { color: #b45309; }
+  .finding-box.good     .finding-title { color: #276749; }
+  .finding-desc { font-size: 12px; color: #555; }
+  .action-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .action-table th { background: #f0f2f8; padding: 9px 14px; text-align: left; font-size: 11px; color: #555; font-weight: 600; }
+  .action-table td { padding: 10px 14px; border-bottom: 1px solid #edf0f7; vertical-align: top; }
+  .action-table tr:last-child td { border-bottom: none; }
+  .priority { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; white-space: nowrap; }
+  .priority.high   { background: #fce4ec; color: #c62828; }
+  .priority.medium { background: #fff8e1; color: #f57f17; }
+  .priority.low    { background: #e8f5e9; color: #2e7d32; }
+  .summary-note { background: #f0f2f8; border-radius: 8px; padding: 16px 20px; font-size: 13px; color: #444; line-height: 1.8; }
+  .footer { border-top: 1px solid #edf0f7; padding: 16px 40px; display: flex; justify-content: space-between; font-size: 11px; color: #aaa; flex-wrap: wrap; gap: 8px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="header-top">
+      <div>
+        <div class="report-label">網站 SEO / GEO 健診報告</div>
+        <div class="brand-name">全聯全電商</div>
+        <div class="brand-url">https://pxbox.es.pxmart.com.tw/event/2582</div>
+      </div>
+      <div class="report-meta">
+        <div>健診日期：2026-06-18</div>
+        <div>分析者：Angel Tsai</div>
+        <div>分析頁面：618小編帶你買！活動頁</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="score-bar">
+    <div class="score-label">整體評估：</div>
+    <div class="score-pills">
+      <span class="pill warn"><span class="pill-dot"></span>SEO 基礎：待改善</span>
+      <span class="pill bad"><span class="pill-dot"></span>GEO 優化：需強化</span>
+    </div>
+  </div>
+
+  <div class="body">
+
+    <div class="section">
+      <div class="section-title">SEO 基礎檢查</div>
+      <div class="checklist">
+
+        <div class="check-row">
+          <div class="check-icon ok">✓</div>
+          <div class="check-name">網頁標題 (Title)</div>
+          <div class="check-note">「618小編帶你買！ - 全聯全電商」，含品牌名，長度適中</div>
+          <span class="check-tag ok">已設定</span>
+        </div>
+
+        <div class="check-row">
+          <div class="check-icon warn">!</div>
+          <div class="check-name">Meta Description</div>
+          <div class="check-note">使用全站通用描述（全電商，全聯的電商…），非頁面專屬活動說明，無法精準吸引點擊</div>
+          <span class="check-tag warn">不完整</span>
+        </div>
+
+        <div class="check-row">
+          <div class="check-icon ng">✗</div>
+          <div class="check-name">Canonical 連結</div>
+          <div class="check-note">頁面未設定 canonical tag，活動頁可能因多路徑被重複收錄</div>
+          <span class="check-tag ng">缺失</span>
+        </div>
+
+        <div class="check-row">
+          <div class="check-icon warn">!</div>
+          <div class="check-name">OG 社群標籤</div>
+          <div class="check-note">og:title ✅、og:image ✅、og:url ✅，但 og:description 直接複製標題文字，社群分享效果差</div>
+          <span class="check-tag warn">不完整</span>
+        </div>
+
+        <div class="check-row">
+          <div class="check-icon ng">✗</div>
+          <div class="check-name">Twitter Card</div>
+          <div class="check-note">未找到 twitter:card、twitter:title 等 meta tag，分享至 X 時無法顯示卡片預覽</div>
+          <span class="check-tag ng">缺失</span>
+        </div>
+
+        <div class="check-row">
+          <div class="check-icon warn">!</div>
+          <div class="check-name">Sitemap</div>
+          <div class="check-note">robots.txt 指向 /SiteMap/product_sitemap_index.xml（product 商品 sitemap），活動/文章頁未包含在 sitemap 中；標準路徑 /sitemap.xml 回傳 404</div>
+          <span class="check-tag warn">不完整</span>
+        </div>
+
+        <div class="check-row">
+          <div class="check-icon ok">✓</div>
+          <div class="check-name">Robots.txt</div>
+          <div class="check-note">已設定，合理封鎖 /myPage、/myCoupon、/order、/shoppingCart 等用戶隱私頁面</div>
+          <span class="check-tag ok">已設定</span>
+        </div>
+
+        <div class="check-row">
+          <div class="check-icon ok">✓</div>
+          <div class="check-name">Google Search Console</div>
+          <div class="check-note">google-site-verification: IFvttbUVItrE0nzQjIhUtjortYxcZqX2knktfeMYYzc，驗證碼已設定</div>
+          <span class="check-tag ok">已設定</span>
+        </div>
+
+        <div class="check-row">
+          <div class="check-icon ok">✓</div>
+          <div class="check-name">H1 標籤</div>
+          <div class="check-note">H1：「2026 全電商 618 年中大促：超狂回饋神券、免運、點數攻略」，清楚含關鍵字</div>
+          <span class="check-tag ok">已設定</span>
+        </div>
+
+        <div class="check-row">
+          <div class="check-icon ok">✓</div>
+          <div class="check-name">H2 / H3 結構</div>
+          <div class="check-note">有多個 H2 分區（手速訓練、夜貓限定、全支付出擊、終極疊加、全家會員取件），內容層級清楚</div>
+          <span class="check-tag ok">已設定</span>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">GEO 優化檢查（AI 搜尋引擎）</div>
+      <div class="checklist">
+
+        <div class="check-row">
+          <div class="check-icon ng">✗</div>
+          <div class="check-name">FAQ 問答內容</div>
+          <div class="check-note">頁面以圖文懶人包形式呈現，未設計 Q&A 問答區塊，AI 搜尋引擎缺乏可直接引用的問答素材</div>
+          <span class="check-tag ng">缺失</span>
+        </div>
+
+        <div class="check-row">
+          <div class="check-icon ng">✗</div>
+          <div class="check-name">FAQPage Schema</div>
+          <div class="check-note">未找到 schema.org/FAQPage 的 JSON-LD 標記</div>
+          <span class="check-tag ng">缺失</span>
+        </div>
+
+        <div class="check-row">
+          <div class="check-icon ng">✗</div>
+          <div class="check-name">Article Schema</div>
+          <div class="check-note">og:type 雖設為 article，但未設置 schema.org/Article 或 BlogPosting JSON-LD，AI 引擎無法識別文章作者、發布時間等實體資訊</div>
+          <span class="check-tag ng">缺失</span>
+        </div>
+
+        <div class="check-row">
+          <div class="check-icon ng">✗</div>
+          <div class="check-name">Author Schema</div>
+          <div class="check-note">頁面內容有「小編」撰文，但未設置 schema.org/Person 結構化資料，作者實體資訊無法被 AI 識別</div>
+          <span class="check-tag ng">缺失</span>
+        </div>
+
+        <div class="check-row">
+          <div class="check-icon ng">✗</div>
+          <div class="check-name">Organization Schema</div>
+          <div class="check-note">未設置 schema.org/Organization，品牌名稱、官網、Logo 等實體無法被 AI 搜尋引擎正確關聯</div>
+          <span class="check-tag ng">缺失</span>
+        </div>
+
+        <div class="check-row">
+          <div class="check-icon ng">✗</div>
+          <div class="check-name">Breadcrumb Schema</div>
+          <div class="check-note">未設置 schema.org/BreadcrumbList，搜尋結果無法顯示麵包屑路徑（全電商 > 活動 > 618大促）</div>
+          <span class="check-tag ng">缺失</span>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">重點發現</div>
+      <div class="two-col">
+        <div>
+          <div class="finding-box critical">
+            <div class="finding-title">⚠ Schema 結構化資料完全缺失</div>
+            <div class="finding-desc">頁面沒有任何 JSON-LD schema.org 標記（Article、Organization、Breadcrumb 均無），AI 搜尋引擎（Perplexity、ChatGPT Search、Google AI Overview）在處理此頁面時缺乏結構化依據，被引用機率大幅降低。</div>
+          </div>
+          <div class="finding-box critical">
+            <div class="finding-title">⚠ Twitter Card 未設定</div>
+            <div class="finding-desc">分享至 X（Twitter）、LINE 等社群時無法顯示圖片卡片，點擊吸引力下降。設定只需加入 4 行 meta tag，成本極低。</div>
+          </div>
+          <div class="finding-box improve">
+            <div class="finding-title">△ Canonical 與 og:description 需補強</div>
+            <div class="finding-desc">缺少 canonical 可能造成活動頁以多個 URL 被重複收錄；og:description 直接複製標題，社群預覽缺乏獨立說明文字，無法有效引導點擊。</div>
+          </div>
+        </div>
+        <div>
+          <div class="finding-box good">
+            <div class="finding-title">✓ 標題與文章結構清晰</div>
+            <div class="finding-desc">H1 標題包含品牌名與活動關鍵字，H2 分區明確（神券、夜貓、全支付），對 SEO 爬蟲友好，可讀性高。</div>
+          </div>
+          <div class="finding-box good">
+            <div class="finding-title">✓ Google Search Console 已驗證</div>
+            <div class="finding-desc">google-site-verification 驗證碼已設定，可在 GSC 後台監控搜尋表現與收錄狀態，基礎監測能力到位。</div>
+          </div>
+          <div class="finding-box good">
+            <div class="finding-title">✓ Robots.txt 設定合理</div>
+            <div class="finding-desc">正確封鎖購物車、訂單、會員等隱私頁面，同時開放活動頁被爬取。sitemap 路徑也在 robots.txt 中明確指出。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">建議行動</div>
+      <table class="action-table">
+        <thead>
+          <tr><th>優先度</th><th>建議項目</th><th>說明</th><th>預估難度</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="priority high">高</span></td>
+            <td>加入 Article + Organization Schema</td>
+            <td>在 &lt;head&gt; 加入 JSON-LD，標記文章類型（BlogPosting）、作者（Person）、品牌（Organization）。讓 AI 搜尋引擎能識別「這是全聯全電商發布的一篇618活動文章」。</td>
+            <td>★★☆ 中等</td>
+          </tr>
+          <tr>
+            <td><span class="priority high">高</span></td>
+            <td>加入 BreadcrumbList Schema</td>
+            <td>設定頁面路徑：全聯全電商 → 活動 → 618小編帶你買。可讓 Google 搜尋結果顯示麵包屑，提升點擊率。</td>
+            <td>★☆☆ 低</td>
+          </tr>
+          <tr>
+            <td><span class="priority high">高</span></td>
+            <td>設定 Canonical URL</td>
+            <td>在 &lt;head&gt; 加入 &lt;link rel="canonical" href="https://pxbox.es.pxmart.com.tw/event/2582"&gt;，明確告知搜尋引擎此頁的唯一正式網址。</td>
+            <td>★☆☆ 低</td>
+          </tr>
+          <tr>
+            <td><span class="priority medium">中</span></td>
+            <td>修正 og:description</td>
+            <td>改為真正描述活動內容的 1-2 句話，例如「618年中大促攻略：神券搶法、夜貓優惠、全支付點數大獎，小編幫你整理完畢！」讓社群分享顯示有意義的描述。</td>
+            <td>★☆☆ 低</td>
+          </tr>
+          <tr>
+            <td><span class="priority medium">中</span></td>
+            <td>加入 Twitter Card meta tags</td>
+            <td>加入 4 行：twitter:card（summary_large_image）、twitter:title、twitter:description、twitter:image，讓分享至 X / LINE 等平台時顯示圖片卡片。</td>
+            <td>★☆☆ 低</td>
+          </tr>
+          <tr>
+            <td><span class="priority medium">中</span></td>
+            <td>將活動頁納入 Sitemap</td>
+            <td>目前 sitemap 僅涵蓋商品頁，建議新增活動/文章頁的 sitemap，讓搜尋引擎更快發現新活動頁面。</td>
+            <td>★★☆ 中等</td>
+          </tr>
+          <tr>
+            <td><span class="priority low">低</span></td>
+            <td>加入 FAQ 問答區塊 + FAQPage Schema</td>
+            <td>將「618常見問題」（如：神券怎麼領？全支付怎麼回饋？）整理成 Q&A 格式，同時設置 FAQPage JSON-LD。AI 搜尋引擎在回答用戶問題時，更可能直接引用此頁內容。</td>
+            <td>★★☆ 中等</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <div class="section-title">總結</div>
+      <div class="summary-note">
+        這個 618 活動頁在 SEO 基礎面已有一定準備：標題、H1/H2 結構清楚、Google Search Console 驗證完成、robots.txt 設定合理。但有三個低成本的缺口值得立即補齊：<strong>Canonical 連結缺失</strong>、<strong>og:description 只複製標題</strong>、<strong>Twitter Card 完全未設定</strong>。<br><br>
+        更關鍵的是 GEO（AI 搜尋引擎優化）面幾乎完全空白——頁面沒有任何 schema.org 結構化資料，AI 搜尋引擎（如 Perplexity、ChatGPT Search、Google AI Overview）在處理此頁面時缺乏結構化依據，難以將「全聯 618 優惠」等查詢與此頁面連結。<br><br>
+        <strong>最優先行動：</strong>補上 Article + Organization JSON-LD Schema，同時加入 Canonical 與 Twitter Card meta tag，三項合計約半天工作量，但對搜尋可見度的提升效益最高。
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <span>本報告由 Angel Tsai 製作，僅供參考</span>
+    <span>分析工具：Firecrawl · robots.txt · sitemap.xml · Google Search Console</span>
+  </div>
+
+</div>
+</body>
+</html>

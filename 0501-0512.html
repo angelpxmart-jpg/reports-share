@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>電商報表 — 自訂報表（2026-05-01 ～ 2026-05-12）</title>
+<meta name="robots" content="noindex,nofollow">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,"Noto Sans TC",sans-serif;background:#f8fafc;color:#1e293b}
+header{background:#fff;padding:20px 32px 14px;border-bottom:1px solid #e2e8f0;position:sticky;top:0;z-index:10}
+header h1{font-size:20px;font-weight:700}
+header p{font-size:12px;color:#64748b;margin-top:3px}
+.section{padding:28px 32px 8px}
+.section-title{font-size:13px;font-weight:700;color:#94a3b8;letter-spacing:.1em;text-transform:uppercase;
+  border-bottom:1px solid #e2e8f0;padding-bottom:10px;margin-bottom:20px}
+.ai-box{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
+.ai-section{background:#fff;border-radius:10px;padding:16px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.ai-section h3{font-size:13px;font-weight:600;color:#475569;margin-bottom:8px}
+.ai-section p{font-size:13px;line-height:1.7;color:#334155}
+.ai-placeholder{background:#f1f5f9;border-radius:8px;padding:14px;font-size:12px;color:#64748b;margin-bottom:20px}
+.kpi-row{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:24px}
+.kpi{background:#fff;border-radius:10px;padding:16px;border-left:4px solid;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.kpi.gmv{border-color:#6366f1}.kpi.carts{border-color:#0ea5e9}
+.kpi.mem{border-color:#10b981}.kpi.avg{border-color:#f59e0b}
+.kpi.med{border-color:#8b5cf6}.kpi.ref{border-color:#ef4444}
+.kpi label{font-size:11px;color:#64748b;letter-spacing:.04em}
+.kpi .val{font-size:22px;font-weight:700;margin:4px 0;color:#1e293b}
+.kpi-delta.green{color:#10b981;font-size:12px;font-weight:600}
+.kpi-delta.red{color:#ef4444;font-size:12px;font-weight:600}
+.kpi-prev{font-size:11px;color:#94a3b8}
+.charts{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:20px}
+.chart-full{grid-column:1/-1}
+.card{background:#fff;border-radius:10px;padding:18px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.card h2{font-size:13px;font-weight:600;color:#475569;margin-bottom:14px;letter-spacing:.04em}
+canvas{max-height:300px}
+.prod-table{width:100%;border-collapse:collapse;font-size:13px}
+.prod-table th{text-align:left;padding:8px 6px;border-bottom:2px solid #e2e8f0;color:#64748b;font-weight:600}
+.prod-table td{padding:7px 6px;border-bottom:1px solid #f1f5f9;color:#334155}
+.prod-table .prod-name{max-width:360px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.prod-table .pct-cell{color:#6366f1;font-weight:600;white-space:nowrap}
+.prod-table tr:hover td{background:#f8fafc}
+details.prod-collapse{background:#fff;border-radius:10px;box-shadow:0 1px 4px rgba(0,0,0,.06);overflow:hidden}
+details.prod-collapse summary{
+  padding:14px 18px;font-size:13px;font-weight:600;color:#475569;
+  cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;
+  border-bottom:1px solid transparent;user-select:none}
+details.prod-collapse summary::-webkit-details-marker{display:none}
+details.prod-collapse summary::before{content:'▶';font-size:10px;color:#94a3b8;transition:.2s}
+details.prod-collapse[open] summary{border-bottom-color:#e2e8f0}
+details.prod-collapse[open] summary::before{content:'▼'}
+details.prod-collapse .table-wrap{padding:0 18px 18px;max-height:520px;overflow-y:auto}
+.sup-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-bottom:20px}
+.sup-card{background:#fff;border-radius:10px;padding:18px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.sup-header{padding-left:12px;margin-bottom:12px}
+.sup-header h3{font-size:15px;font-weight:700;color:#1e293b}
+.sup-tag{font-size:11px;color:#64748b;margin-top:2px;display:block}
+.sup-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
+.sup-kpis>div{text-align:center;background:#f8fafc;border-radius:8px;padding:10px 4px}
+.sup-kv{font-size:17px;font-weight:700;color:#1e293b}
+.sup-kl{font-size:11px;color:#64748b;margin-top:2px}
+.sup-gender{display:inline-block;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;margin-bottom:10px}
+.anomaly-card{background:#fff;border-radius:10px;padding:16px;margin-bottom:12px;border-left:4px solid;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.anomaly-card.high{border-color:#ef4444}.anomaly-card.medium{border-color:#f59e0b}
+.anomaly-card.low{border-color:#0ea5e9}.anomaly-card.ok{border-color:#10b981}
+.anomaly-card strong{font-size:14px}.anomaly-card p{font-size:13px;color:#475569;margin-top:4px}
+footer{text-align:center;padding:20px;font-size:11px;color:#94a3b8}
+@media(max-width:900px){.kpi-row{grid-template-columns:repeat(2,1fr)}.charts{grid-template-columns:1fr}.ai-box{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <h1>📊 PXPAY 箱購平台 電商報表</h1>
+  <p>自訂報表（2026-05-01 ～ 2026-05-12）　|　全平台　|　僅含已付款訂單</p>
+</header>
+
+<!-- ── 總覽 ─────────────────────────────────────────── -->
+<div class="section">
+  <div class="section-title">📊 總覽</div>
+  <div class="ai-placeholder">💡 在 電商報表/config.json 設定 anthropic_api_key 以啟用 AI 摘要</div>
+  
+<div class="kpi-row">
+  <div class="kpi gmv"><label>當期 GMV</label><div class="val">NT$ 212,854,996</div></div>
+  <div class="kpi carts"><label>購物車數</label><div class="val">47,194</div></div>
+  <div class="kpi mem"><label>不重複會員</label><div class="val">33,027</div></div>
+  <div class="kpi avg"><label>平均客單價</label><div class="val">NT$ 4,510</div></div>
+  <div class="kpi med"><label>中位數客單</label><div class="val">NT$ 1,374</div></div>
+  <div class="kpi ref"><label>退款率</label><div class="val">4.2%</div></div>
+</div>
+  <div class="charts">
+    
+    <div class="card chart-full"><h2>⏱ 每日 GMV 趨勢</h2><canvas id="dailyGmvChart"></canvas></div>
+    <div class="card"><h2>🛒 每日購物車數</h2><canvas id="dailyCartsChart"></canvas></div>
+    <div class="card"><h2>👤 每日不重複會員</h2><canvas id="dailyMemChart"></canvas></div>
+  </div>
+</div>
+
+<!-- ── 品類商品 ──────────────────────────────────────── -->
+<div class="section">
+  <div class="section-title">📦 品類商品</div>
+  <div class="charts">
+    <div class="card"><h2>📊 大分類 GMV 排行 <span style="font-size:11px;font-weight:400;color:#94a3b8">（點選分類查看爆品 Top 10）</span></h2><canvas id="bigCatChart"></canvas></div>
+    <div class="card"><h2>📊 中分類 TOP 15</h2><canvas id="midCatChart"></canvas></div>
+  </div>
+  <div id="cat-top10" style="display:none;margin-bottom:20px">
+    <div class="card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+        <h2 id="cat-top10-title" style="margin-bottom:0">📦 分類爆品 Top 10</h2>
+        <button onclick="document.getElementById('cat-top10').style.display='none'"
+          style="background:none;border:1px solid #e2e8f0;border-radius:6px;padding:4px 12px;
+                 font-size:12px;color:#64748b;cursor:pointer">✕ 關閉</button>
+      </div>
+      <table class="prod-table">
+        <thead><tr><th>#</th><th>品名</th><th>GMV</th><th>佔比</th><th>件數</th><th>訂單數</th></tr></thead>
+        <tbody id="cat-top10-body"></tbody>
+      </table>
+    </div>
+  </div>
+  <details class="prod-collapse">
+    <summary>🔥 爆品 TOP 100（依 GMV，點擊展開）</summary>
+    <div class="table-wrap">
+      <table class="prod-table">
+        <thead><tr><th>#</th><th>品名</th><th>GMV</th><th>佔比</th><th>件數</th><th>訂單數</th></tr></thead>
+        <tbody><tr><td>1</td><td class="prod-name">【Apple】Apple原廠(AirPods Pro3)</td><td>NT$ 23,506,908</td><td class="pct-cell">16.2%</td><td>3,451</td><td>1,393</td></tr><tr><td>2</td><td class="prod-name">【Apple】AirPods4 ANC MXP93TA/A(</td><td>NT$ 14,589,045</td><td class="pct-cell">10.0%</td><td>2,663</td><td>1,128</td></tr><tr><td>3</td><td class="prod-name">【Nintendo 任天堂】NS2 瑪利歐賽車世界同捆盒裝主</td><td>NT$ 5,908,500</td><td class="pct-cell">4.1%</td><td>384</td><td>314</td></tr><tr><td>4</td><td class="prod-name">【Nintendo 任天堂】<現貨> NS2 主機 瑪利歐賽</td><td>NT$ 5,889,670</td><td class="pct-cell">4.1%</td><td>409</td><td>409</td></tr><tr><td>5</td><td class="prod-name">【Nintendo 任天堂】NS2 主機 瑪利歐賽車 世界彩</td><td>NT$ 5,388,917</td><td class="pct-cell">3.7%</td><td>354</td><td>132</td></tr><tr><td>6</td><td class="prod-name">【Marshall】Stanmore III 第三代 藍牙喇</td><td>NT$ 5,175,000</td><td class="pct-cell">3.6%</td><td>460</td><td>130</td></tr><tr><td>7</td><td class="prod-name">【Nintendo 任天堂】NS2 主機 彩繪盒裝 (不含瑪</td><td>NT$ 4,761,966</td><td class="pct-cell">3.3%</td><td>313</td><td>128</td></tr><tr><td>8</td><td class="prod-name">【OPPO】Reno 15F 6.57吋 5G智慧型手機 1</td><td>NT$ 4,731,710</td><td class="pct-cell">3.3%</td><td>424</td><td>423</td></tr><tr><td>9</td><td class="prod-name">【Nintendo 任天堂】Switch OLED 斯普拉頓</td><td>NT$ 4,658,040</td><td class="pct-cell">3.2%</td><td>513</td><td>117</td></tr><tr><td>10</td><td class="prod-name">【Google】Pixel 10 Pro Fold (16G</td><td>NT$ 4,051,620</td><td class="pct-cell">2.8%</td><td>90</td><td>90</td></tr><tr><td>11</td><td class="prod-name">【OPPO】OPPO A6s 大電量5G雙卡機 (6G/12</td><td>NT$ 3,813,637</td><td class="pct-cell">2.6%</td><td>694</td><td>440</td></tr><tr><td>12</td><td class="prod-name">【OPPO】Reno 15F 6.57吋 5G智慧型手機 1</td><td>NT$ 3,658,000</td><td class="pct-cell">2.5%</td><td>295</td><td>295</td></tr><tr><td>13</td><td class="prod-name">【Nintendo 任天堂】NS2 主機 瑪利歐賽車 世界彩</td><td>NT$ 3,607,321</td><td class="pct-cell">2.5%</td><td>237</td><td>96</td></tr><tr><td>14</td><td class="prod-name">【Apple】iPad 11吋 Wi-Fi 128G藍-20</td><td>NT$ 3,248,131</td><td class="pct-cell">2.2%</td><td>300</td><td>140</td></tr><tr><td>15</td><td class="prod-name">【王品集團】夏慕尼 商品券（$1,280元+10%）_實體餐</td><td>NT$ 2,834,000</td><td class="pct-cell">1.9%</td><td>260</td><td>260</td></tr><tr><td>16</td><td class="prod-name">【OPPO】Reno15 F 6.57吋(12G/256G/</td><td>NT$ 2,661,045</td><td class="pct-cell">1.8%</td><td>294</td><td>292</td></tr><tr><td>17</td><td class="prod-name">【Apple】AirPods4 MXP63TA/A(AP4耳</td><td>NT$ 2,395,866</td><td class="pct-cell">1.6%</td><td>584</td><td>236</td></tr><tr><td>18</td><td class="prod-name">【Nintendo 任天堂】NS2 主機 瑪利歐賽車 世界彩</td><td>NT$ 2,162,148</td><td class="pct-cell">1.5%</td><td>141</td><td>91</td></tr><tr><td>19</td><td class="prod-name">【SONY 索尼】Xperia 10 VII 8G/128G</td><td>NT$ 2,118,243</td><td class="pct-cell">1.5%</td><td>181</td><td>181</td></tr><tr><td>20</td><td class="prod-name">【Nintendo 任天堂】NS2 主機 瑪利歐賽車 世界彩</td><td>NT$ 1,883,354</td><td class="pct-cell">1.3%</td><td>123</td><td>92</td></tr><tr><td>21</td><td class="prod-name">【西堤】西堤套餐（698元+10%） 商品券(八入組)</td><td>NT$ 1,739,800</td><td class="pct-cell">1.2%</td><td>300</td><td>150</td></tr><tr><td>22</td><td class="prod-name">【OPPO】Reno 15F 6.57吋 5G智慧型手機(8</td><td>NT$ 1,692,095</td><td class="pct-cell">1.2%</td><td>180</td><td>104</td></tr><tr><td>23</td><td class="prod-name">【Apple】AirPods 4 主動式降噪款藍芽耳機 (M</td><td>NT$ 1,528,108</td><td class="pct-cell">1.1%</td><td>334</td><td>145</td></tr><tr><td>24</td><td class="prod-name">【煙波大飯店】聯合住宿券（四張組）_實體紙券(有效期限 20</td><td>NT$ 1,495,000</td><td class="pct-cell">1.0%</td><td>130</td><td>130</td></tr><tr><td>25</td><td class="prod-name">【Nintendo 任天堂】NS2 SWITCH2 瑪利歐賽</td><td>NT$ 1,478,000</td><td class="pct-cell">1.0%</td><td>100</td><td>100</td></tr><tr><td>26</td><td class="prod-name">【饗賓集團】饗食天堂 假日晚餐餐券 NT1199(五入組)</td><td>NT$ 1,250,000</td><td class="pct-cell">0.9%</td><td>200</td><td>100</td></tr><tr><td>27</td><td class="prod-name">【饗賓集團】饗食天堂 平日下午茶餐券 NT$800(五入組)</td><td>NT$ 1,166,200</td><td class="pct-cell">0.8%</td><td>280</td><td>94</td></tr><tr><td>28</td><td class="prod-name">【Apple】iPad 11吋 Wi-Fi 128G粉-20</td><td>NT$ 1,081,111</td><td class="pct-cell">0.7%</td><td>100</td><td>58</td></tr><tr><td>29</td><td class="prod-name">【Apple】Watch Series 11 GPS 46m</td><td>NT$ 1,061,757</td><td class="pct-cell">0.7%</td><td>87</td><td>72</td></tr><tr><td>30</td><td class="prod-name">【Apple】iPhone 17 Pro Max 256GB</td><td>NT$ 1,032,700</td><td class="pct-cell">0.7%</td><td>23</td><td>23</td></tr><tr><td>31</td><td class="prod-name">【Apple】AirPods Pro 3(主動式降噪)</td><td>NT$ 1,003,137</td><td class="pct-cell">0.7%</td><td>160</td><td>84</td></tr><tr><td>32</td><td class="prod-name">【vivo】X300 Pro 16G+512G(6.78吋 </td><td>NT$ 904,810</td><td class="pct-cell">0.6%</td><td>31</td><td>28</td></tr><tr><td>33</td><td class="prod-name">【Panasonic 國際牌】微電腦微波爐25L(NN-ST</td><td>NT$ 851,587</td><td class="pct-cell">0.6%</td><td>321</td><td>25</td></tr><tr><td>34</td><td class="prod-name">【Apple】AirPods 4(主動式降噪款)</td><td>NT$ 846,973</td><td class="pct-cell">0.6%</td><td>184</td><td>141</td></tr><tr><td>35</td><td class="prod-name">【TATUNG 大同】10人份電鍋(簡配) 紅色(TAC-1</td><td>NT$ 830,559</td><td class="pct-cell">0.6%</td><td>362</td><td>35</td></tr><tr><td>36</td><td class="prod-name">【Gogoro】預購Delight(GM7R2)</td><td>NT$ 786,280</td><td class="pct-cell">0.5%</td><td>9</td><td>9</td></tr><tr><td>37</td><td class="prod-name">【Redmi 紅米】15 5G 6.9吋 智慧手機(4G/1</td><td>NT$ 756,343</td><td class="pct-cell">0.5%</td><td>167</td><td>163</td></tr><tr><td>38</td><td class="prod-name">【配方時代】85%高濃度頂級魚油 60顆/盒(2入組)</td><td>NT$ 592,854</td><td class="pct-cell">0.4%</td><td>377</td><td>323</td></tr><tr><td>39</td><td class="prod-name">【可口可樂】曲線瓶600mlx24瓶</td><td>NT$ 562,977</td><td class="pct-cell">0.4%</td><td>1,737</td><td>388</td></tr><tr><td>40</td><td class="prod-name">【Nintendo 任天堂】 NS Switch 瑪利歐派對</td><td>NT$ 561,840</td><td class="pct-cell">0.4%</td><td>462</td><td>133</td></tr><tr><td>41</td><td class="prod-name">【Apple】iPad 11吋 Wi-Fi 128G黃-20</td><td>NT$ 543,356</td><td class="pct-cell">0.4%</td><td>50</td><td>24</td></tr><tr><td>42</td><td class="prod-name">【Gogoro】預購VIVA XL BELT(GSP6DT)</td><td>NT$ 541,280</td><td class="pct-cell">0.4%</td><td>7</td><td>7</td></tr><tr><td>43</td><td class="prod-name">【Apple】iPhone 17 Pro Max 256GB</td><td>NT$ 538,800</td><td class="pct-cell">0.4%</td><td>12</td><td>12</td></tr><tr><td>44</td><td class="prod-name">【Panasonic 國際牌】掌上型3枚刃電鬍刀(黑)(ES</td><td>NT$ 507,000</td><td class="pct-cell">0.3%</td><td>200</td><td>2</td></tr><tr><td>45</td><td class="prod-name">【Apple】iPhone 17 Pro Max 256GB</td><td>NT$ 493,900</td><td class="pct-cell">0.3%</td><td>11</td><td>11</td></tr><tr><td>46</td><td class="prod-name">【Apple】AirPods 4 無線耳機 主動式降噪款(台</td><td>NT$ 491,310</td><td class="pct-cell">0.3%</td><td>103</td><td>72</td></tr><tr><td>47</td><td class="prod-name">【Gogoro】預購VIVA XL ME(GSP6DT)</td><td>NT$ 479,280</td><td class="pct-cell">0.3%</td><td>6</td><td>6</td></tr><tr><td>48</td><td class="prod-name">【Apple】AirPods Pro 3 主動式降噪藍芽耳機</td><td>NT$ 477,780</td><td class="pct-cell">0.3%</td><td>76</td><td>76</td></tr><tr><td>49</td><td class="prod-name">【悅氏】Light鹼性水720mlx20瓶</td><td>NT$ 448,993</td><td class="pct-cell">0.3%</td><td>2,838</td><td>705</td></tr><tr><td>50</td><td class="prod-name">【Nintendo 任天堂】Switch 2 NS2 Joy</td><td>NT$ 447,950</td><td class="pct-cell">0.3%</td><td>527</td><td>527</td></tr><tr><td>51</td><td class="prod-name">【Gogoro】預購VIVA MIX BELT(GJ6C2)</td><td>NT$ 440,580</td><td class="pct-cell">0.3%</td><td>6</td><td>6</td></tr><tr><td>52</td><td class="prod-name">【Apple】AirPods 4 主動式降噪款(兩入組)</td><td>NT$ 409,408</td><td class="pct-cell">0.3%</td><td>45</td><td>41</td></tr><tr><td>53</td><td class="prod-name">【SAMSUNG 三星】Galaxy S25 Ultra 1</td><td>NT$ 391,626</td><td class="pct-cell">0.3%</td><td>14</td><td>10</td></tr><tr><td>54</td><td class="prod-name">【Nintendo 任天堂】NS2 Switch 2 Pro</td><td>NT$ 377,766</td><td class="pct-cell">0.3%</td><td>195</td><td>192</td></tr><tr><td>55</td><td class="prod-name">【TECO 東元】7-8坪R32一級變頻冷暖5.2KW分離式</td><td>NT$ 366,750</td><td class="pct-cell">0.3%</td><td>14</td><td>9</td></tr><tr><td>56</td><td class="prod-name">【Gogoro】預購EZZY 500(GE5XK)</td><td>NT$ 365,400</td><td class="pct-cell">0.3%</td><td>5</td><td>5</td></tr><tr><td>57</td><td class="prod-name">【春風】抽取式衛生紙(130抽x12包x6串)</td><td>NT$ 334,857</td><td class="pct-cell">0.2%</td><td>405</td><td>293</td></tr><tr><td>58</td><td class="prod-name">【Apple】iPad 11吋 Wi-Fi 128G銀-20</td><td>NT$ 327,422</td><td class="pct-cell">0.2%</td><td>30</td><td>25</td></tr><tr><td>59</td><td class="prod-name">【配方時代】三倍關鍵非變性二型膠原蛋白 30顆/盒(3入組)</td><td>NT$ 312,332</td><td class="pct-cell">0.2%</td><td>107</td><td>107</td></tr><tr><td>60</td><td class="prod-name">【SHISEIDO 資生堂】百優精純乳霜 75ml 2入組(</td><td>NT$ 312,306</td><td class="pct-cell">0.2%</td><td>131</td><td>126</td></tr><tr><td>61</td><td class="prod-name">【Nintendo 任天堂】NS Switch 任天堂明星大</td><td>NT$ 302,265</td><td class="pct-cell">0.2%</td><td>260</td><td>133</td></tr><tr><td>62</td><td class="prod-name">【SONY 索尼】PS5 原廠主機直立架(台灣公司貨 )</td><td>NT$ 287,300</td><td class="pct-cell">0.2%</td><td>338</td><td>338</td></tr><tr><td>63</td><td class="prod-name">【OPPO】Reno15 12G+256G(◆送防摔殼+玻璃</td><td>NT$ 285,776</td><td class="pct-cell">0.2%</td><td>23</td><td>22</td></tr><tr><td>64</td><td class="prod-name">【黑松】FIN補給飲料 (300mlx6入)x4組</td><td>NT$ 278,144</td><td class="pct-cell">0.2%</td><td>1,774</td><td>584</td></tr><tr><td>65</td><td class="prod-name">【SAMSUNG 三星】Galaxy A56 5G 6.7吋</td><td>NT$ 267,157</td><td class="pct-cell">0.2%</td><td>26</td><td>21</td></tr><tr><td>66</td><td class="prod-name">【CONSOFY】3層抽取衛生紙 (120抽x24包x3串)</td><td>NT$ 257,700</td><td class="pct-cell">0.2%</td><td>288</td><td>222</td></tr><tr><td>67</td><td class="prod-name">【Apple】2025 iPad 11吋 128G Wifi</td><td>NT$ 251,767</td><td class="pct-cell">0.2%</td><td>27</td><td>24</td></tr><tr><td>68</td><td class="prod-name">【Panasonic 國際牌】變頻微波爐27L /無轉盤(N</td><td>NT$ 251,149</td><td class="pct-cell">0.2%</td><td>49</td><td>49</td></tr><tr><td>69</td><td class="prod-name">【ASUS 華碩】Ascent GX10 1TB版(ARM </td><td>NT$ 249,400</td><td class="pct-cell">0.2%</td><td>2</td><td>2</td></tr><tr><td>70</td><td class="prod-name">【Nintendo 任天堂】NS Switch 超級瑪利歐 </td><td>NT$ 241,849</td><td class="pct-cell">0.2%</td><td>389</td><td>137</td></tr><tr><td>71</td><td class="prod-name">【西堤】西堤牛排 商品券 $698+10%(四入組)</td><td>NT$ 239,350</td><td class="pct-cell">0.2%</td><td>85</td><td>76</td></tr><tr><td>72</td><td class="prod-name">【Apple】iPhone 17 Pro 256G(6.3吋</td><td>NT$ 233,880</td><td class="pct-cell">0.2%</td><td>6</td><td>6</td></tr><tr><td>73</td><td class="prod-name">【SAMSUNG 三星】Galaxy A17 5G 6G+1</td><td>NT$ 232,810</td><td class="pct-cell">0.2%</td><td>50</td><td>38</td></tr><tr><td>74</td><td class="prod-name">【來復易】防漏安心復健褲L號(14片x4包)</td><td>NT$ 229,783</td><td class="pct-cell">0.2%</td><td>211</td><td>104</td></tr><tr><td>75</td><td class="prod-name">【Nintendo 任天堂】NS2 Switch 寶可夢傳說</td><td>NT$ 226,730</td><td class="pct-cell">0.2%</td><td>169</td><td>85</td></tr><tr><td>76</td><td class="prod-name">【SAMSUNG 三星】Galaxy S25+ 12G+25</td><td>NT$ 226,122</td><td class="pct-cell">0.2%</td><td>10</td><td>9</td></tr><tr><td>77</td><td class="prod-name">【ARIEL】抗菌洗衣精/洗衣液補充包-抗菌去漬 1690g</td><td>NT$ 212,640</td><td class="pct-cell">0.1%</td><td>229</td><td>69</td></tr><tr><td>78</td><td class="prod-name">【TECO 東元】4-5坪R32一級變頻冷暖2.9KW分離式</td><td>NT$ 209,500</td><td class="pct-cell">0.1%</td><td>13</td><td>11</td></tr><tr><td>79</td><td class="prod-name">【ARIEL】抗菌洗衣精/洗衣液補充包-室內晾衣 1690g</td><td>NT$ 209,461</td><td class="pct-cell">0.1%</td><td>223</td><td>63</td></tr><tr><td>80</td><td class="prod-name">【ECOVACS 科沃斯】DEEBOT 時尚掃拖機(DEEB</td><td>NT$ 208,993</td><td class="pct-cell">0.1%</td><td>27</td><td>27</td></tr><tr><td>81</td><td class="prod-name">【HITACHI 日立】3-4坪 R32 一級能效豪華系列變</td><td>NT$ 207,229</td><td class="pct-cell">0.1%</td><td>9</td><td>9</td></tr><tr><td>82</td><td class="prod-name">【五月花】厚棒4層抽取式衛生紙 (90抽x10包x6串)</td><td>NT$ 206,360</td><td class="pct-cell">0.1%</td><td>199</td><td>110</td></tr><tr><td>83</td><td class="prod-name">【陶板屋】陶板屋套餐 $698+10% 商品券(四入組)</td><td>NT$ 202,900</td><td class="pct-cell">0.1%</td><td>72</td><td>62</td></tr><tr><td>84</td><td class="prod-name">【vivo】X300 12G+256G(◆送v.friend</td><td>NT$ 201,787</td><td class="pct-cell">0.1%</td><td>10</td><td>10</td></tr><tr><td>85</td><td class="prod-name">【大同】10人份蘋果白全不鏽鋼TAC-10L-MCS同款電鍋</td><td>NT$ 201,673</td><td class="pct-cell">0.1%</td><td>84</td><td>84</td></tr><tr><td>86</td><td class="prod-name">【Electrolux 伊萊克斯】Well Q6 無線吸塵器</td><td>NT$ 194,593</td><td class="pct-cell">0.1%</td><td>52</td><td>50</td></tr><tr><td>87</td><td class="prod-name">【OPPO】A6s 5G (6G/128G) 6.75吋 智</td><td>NT$ 187,592</td><td class="pct-cell">0.1%</td><td>36</td><td>18</td></tr><tr><td>88</td><td class="prod-name">【來復易】防漏安心復健褲XL號(12片x4包)</td><td>NT$ 186,773</td><td class="pct-cell">0.1%</td><td>171</td><td>83</td></tr><tr><td>89</td><td class="prod-name">【配方時代】三倍活力極黑瑪卡 30包/盒(3入組)</td><td>NT$ 183,889</td><td class="pct-cell">0.1%</td><td>65</td><td>65</td></tr><tr><td>90</td><td class="prod-name">【小米 Xiaomi】A Pro 2026 65型 QLED</td><td>NT$ 179,454</td><td class="pct-cell">0.1%</td><td>12</td><td>12</td></tr><tr><td>91</td><td class="prod-name">【Nintendo 任天堂】Switch 2 NS2瑪利歐賽</td><td>NT$ 178,580</td><td class="pct-cell">0.1%</td><td>11</td><td>11</td></tr><tr><td>92</td><td class="prod-name">【Apple】iPhone 17 Pro Max 256G </td><td>NT$ 172,800</td><td class="pct-cell">0.1%</td><td>4</td><td>4</td></tr><tr><td>93</td><td class="prod-name">【Apple】iPhone 17 256G 新機(現貨發貨)</td><td>NT$ 167,940</td><td class="pct-cell">0.1%</td><td>6</td><td>6</td></tr><tr><td>94</td><td class="prod-name">【亞培】安素原味HMB升級配方(237ml*24入)</td><td>NT$ 167,535</td><td class="pct-cell">0.1%</td><td>110</td><td>86</td></tr><tr><td>95</td><td class="prod-name">【配方時代】85%高濃度頂級魚油(60顆/盒)</td><td>NT$ 166,424</td><td class="pct-cell">0.1%</td><td>214</td><td>171</td></tr><tr><td>96</td><td class="prod-name">【白熊】洗碗精 5kgx4桶</td><td>NT$ 165,499</td><td class="pct-cell">0.1%</td><td>260</td><td>127</td></tr><tr><td>97</td><td class="prod-name">【Apple】AirPods 4 主動式降噪款藍芽耳機 (M</td><td>NT$ 165,422</td><td class="pct-cell">0.1%</td><td>36</td><td>29</td></tr><tr><td>98</td><td class="prod-name">【泰山】純水  2500mlx6瓶</td><td>NT$ 164,759</td><td class="pct-cell">0.1%</td><td>903</td><td>282</td></tr><tr><td>99</td><td class="prod-name">【舒潔】棉柔舒適抽取衛生紙 (110抽x12包x5串)</td><td>NT$ 162,913</td><td class="pct-cell">0.1%</td><td>207</td><td>142</td></tr><tr><td>100</td><td class="prod-name">【SAMSUNG 三星】Galaxy S25 Ultra 1</td><td>NT$ 162,900</td><td class="pct-cell">0.1%</td><td>5</td><td>5</td></tr></tbody>
+      </table>
+    </div>
+  </details>
+</div>
+
+<!-- ── 行銷付款 ──────────────────────────────────────── -->
+<div class="section">
+  <div class="section-title">🎟 行銷付款</div>
+  <div class="charts">
+    <div class="card chart-full"><h2>🎟 TOP 折價券（總折扣金額）</h2><canvas id="couponChart"></canvas></div>
+    <div class="card chart-full"><h2>🏷 行銷活動 TOP 10（折扣金額）</h2><canvas id="actChart"></canvas></div>
+    <div class="card"><h2>💳 付款方式 GMV 分布</h2><canvas id="payChart"></canvas></div>
+    <div class="card" style="display:flex;align-items:center;justify-content:center;flex-direction:column">
+      <div style="font-size:48px;font-weight:700;color:#6366f1">60.2%</div>
+      <div style="font-size:13px;color:#64748b;margin-top:8px">折價券使用率</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 受眾分析 ──────────────────────────────────────── -->
+<div class="section">
+  <div class="section-title">👥 受眾分析</div>
+  <div class="charts">
+    <div class="card"><h2>⚥ 性別分布</h2><canvas id="genderChart"></canvas></div>
+    <div class="card"><h2>🗺 收件地區 Top 12</h2><canvas id="regionChart"></canvas></div>
+    <div class="card chart-full"><h2>📊 年齡層 × 性別</h2><canvas id="ageCrossChart"></canvas></div>
+    <div class="card chart-full"><h2>💰 客單價區間分布（購物車）</h2><canvas id="valDistChart"></canvas></div>
+  </div>
+</div>
+
+<!-- ── 供應商分析 ────────────────────────────────────── -->
+<div class="section">
+  <div class="section-title">🏢 指定供應商銷售分析</div>
+  <p style="font-size:12px;color:#94a3b8;margin-bottom:16px">※ 金盛世以品名（倍潔雅、Livi 優活、CONSOFY、柔芙、PASEO）為篩選條件，涵蓋全聯自營、RT、EC 供應商三種通路</p>
+  
+  <div class="sup-grid"><div class="sup-card">
+  <div class="sup-header" style="border-left:4px solid #6366f1">
+    <h3>全虹企業（Apple）</h3>
+    <span class="sup-tag">3C ｜ 供應商編號 600014</span>
+  </div>
+  <div class="sup-kpis">
+    <div><div class="sup-kv" style="color:#6366f1">NT$ 48,992,601</div><div class="sup-kl">營收</div></div>
+    <div><div class="sup-kv">3,361</div><div class="sup-kl">訂單數</div></div>
+    <div><div class="sup-kv">711</div><div class="sup-kl">會員數</div></div>
+  </div>
+  <div class="sup-gender" style="background:#60a5fa20;color:#60a5fa">👤 男性為主（男71%）</div>
+  <table class="prod-table" style="margin-top:10px">
+    <thead><tr><th>TOP 商品</th><th>營收</th><th>銷量</th></tr></thead>
+    <tbody><tr><td class="prod-name">【Apple】Apple原廠(AirPods</td><td style="color:#1e293b;font-weight:600">NT$ 23,506,908</td><td style="color:#64748b">3,451</td></tr><tr><td class="prod-name">【Apple】AirPods4 ANC MX</td><td style="color:#1e293b;font-weight:600">NT$ 14,589,045</td><td style="color:#64748b">2,663</td></tr><tr><td class="prod-name">【Apple】iPad 11吋 Wi-Fi </td><td style="color:#1e293b;font-weight:600">NT$ 3,248,131</td><td style="color:#64748b">300</td></tr><tr><td class="prod-name">【Apple】AirPods4 MXP63T</td><td style="color:#1e293b;font-weight:600">NT$ 2,395,866</td><td style="color:#64748b">584</td></tr><tr><td class="prod-name">【Apple】iPad 11吋 Wi-Fi </td><td style="color:#1e293b;font-weight:600">NT$ 1,081,111</td><td style="color:#64748b">100</td></tr></tbody>
+  </table>
+</div><div class="sup-card">
+  <div class="sup-header" style="border-left:4px solid #f472b6">
+    <h3>跨境豐收（美妝）</h3>
+    <span class="sup-tag">專櫃美妝 ｜ 供應商編號 200294</span>
+  </div>
+  <div class="sup-kpis">
+    <div><div class="sup-kv" style="color:#f472b6">NT$ 1,759,057</div><div class="sup-kl">營收</div></div>
+    <div><div class="sup-kv">901</div><div class="sup-kl">訂單數</div></div>
+    <div><div class="sup-kv">813</div><div class="sup-kl">會員數</div></div>
+  </div>
+  <div class="sup-gender" style="background:#f472b620;color:#f472b6">👤 女性為主（女80%）</div>
+  <table class="prod-table" style="margin-top:10px">
+    <thead><tr><th>TOP 商品</th><th>營收</th><th>銷量</th></tr></thead>
+    <tbody><tr><td class="prod-name">【SHISEIDO 資生堂】百優精純乳霜 7</td><td style="color:#1e293b;font-weight:600">NT$ 312,306</td><td style="color:#64748b">131</td></tr><tr><td class="prod-name">【ESTEE LAUDER 雅詩蘭黛】特潤超</td><td style="color:#1e293b;font-weight:600">NT$ 148,044</td><td style="color:#64748b">33</td></tr><tr><td class="prod-name">【cle de peau BEAUTE 肌膚</td><td style="color:#1e293b;font-weight:600">NT$ 93,182</td><td style="color:#64748b">93</td></tr><tr><td class="prod-name">【SHISEIDO 資生堂】百優精純乳霜 7</td><td style="color:#1e293b;font-weight:600">NT$ 57,639</td><td style="color:#64748b">12</td></tr><tr><td class="prod-name">【LANCOME 蘭蔻】超極限肌因賦活露 1</td><td style="color:#1e293b;font-weight:600">NT$ 55,980</td><td style="color:#64748b">10</td></tr></tbody>
+  </table>
+</div><div class="sup-card">
+  <div class="sup-header" style="border-left:4px solid #10b981">
+    <h3>壹伍壹拾（保健）</h3>
+    <span class="sup-tag">保健/護理 ｜ 供應商編號 200809</span>
+  </div>
+  <div class="sup-kpis">
+    <div><div class="sup-kv" style="color:#10b981">NT$ 458,861</div><div class="sup-kl">營收</div></div>
+    <div><div class="sup-kv">163</div><div class="sup-kl">訂單數</div></div>
+    <div><div class="sup-kv">156</div><div class="sup-kl">會員數</div></div>
+  </div>
+  <div class="sup-gender" style="background:#f472b620;color:#f472b6">👤 女性為主（女76%）</div>
+  <table class="prod-table" style="margin-top:10px">
+    <thead><tr><th>TOP 商品</th><th>營收</th><th>銷量</th></tr></thead>
+    <tbody><tr><td class="prod-name">【飲后】超孅飲-奇異果風味6盒(15包/盒)</td><td style="color:#1e293b;font-weight:600">NT$ 135,338</td><td style="color:#64748b">49</td></tr><tr><td class="prod-name">【PP 石墨烯】第四代石墨烯能量護膝2雙(送</td><td style="color:#1e293b;font-weight:600">NT$ 31,935</td><td style="color:#64748b">9</td></tr><tr><td class="prod-name">【PP 石墨烯】石墨烯粒線能量修復護腕2入(</td><td style="color:#1e293b;font-weight:600">NT$ 31,054</td><td style="color:#64748b">17</td></tr><tr><td class="prod-name">【亞馬生醫】MPE-311靈活粒現5盒(30</td><td style="color:#1e293b;font-weight:600">NT$ 28,719</td><td style="color:#64748b">8</td></tr><tr><td class="prod-name">【PP 石墨烯】石墨烯蠶絲助眠眼罩2件(送晶</td><td style="color:#1e293b;font-weight:600">NT$ 28,332</td><td style="color:#64748b">11</td></tr></tbody>
+  </table>
+</div><div class="sup-card">
+  <div class="sup-header" style="border-left:4px solid #f59e0b">
+    <h3>金盛世紙業（日用）</h3>
+    <span class="sup-tag">日用/紙品 ｜ 品名篩選（跨通路）</span>
+  </div>
+  <div class="sup-kpis">
+    <div><div class="sup-kv" style="color:#f59e0b">NT$ 735,582</div><div class="sup-kl">營收</div></div>
+    <div><div class="sup-kv">770</div><div class="sup-kl">訂單數</div></div>
+    <div><div class="sup-kv">692</div><div class="sup-kl">會員數</div></div>
+  </div>
+  <div class="sup-gender" style="background:#f472b620;color:#f472b6">👤 女性為主（女72%）</div>
+  <table class="prod-table" style="margin-top:10px">
+    <thead><tr><th>TOP 商品</th><th>營收</th><th>銷量</th></tr></thead>
+    <tbody><tr><td class="prod-name">【CONSOFY】3層抽取衛生紙 (120抽</td><td style="color:#1e293b;font-weight:600">NT$ 257,700</td><td style="color:#64748b">288</td></tr><tr><td class="prod-name">【倍潔雅】柔軟舒適抽取式衛生紙(110抽x1</td><td style="color:#1e293b;font-weight:600">NT$ 125,266</td><td style="color:#64748b">188</td></tr><tr><td class="prod-name">【柔芙】輕巧包抽取式衛生紙 (120抽x20</td><td style="color:#1e293b;font-weight:600">NT$ 60,073</td><td style="color:#64748b">73</td></tr><tr><td class="prod-name">【CONSOFY】2層抽取衛生紙(150抽x</td><td style="color:#1e293b;font-weight:600">NT$ 56,526</td><td style="color:#64748b">78</td></tr><tr><td class="prod-name">【柔芙】優質抽取式衛生紙(100抽x10包x</td><td style="color:#1e293b;font-weight:600">NT$ 52,215</td><td style="color:#64748b">73</td></tr></tbody>
+  </table>
+</div></div>
+  <div class="charts">
+    <div class="card chart-full"><h2>📈 各供應商每日營收趨勢</h2><canvas id="supDailyChart"></canvas></div>
+    <div class="card chart-full"><h2>📊 各供應商年齡層分布</h2><canvas id="supAgeChart"></canvas></div>
+  </div>
+</div>
+
+<!-- ── 異常訊號 ──────────────────────────────────────── -->
+<div class="section">
+  <div class="section-title">⚠️ 異常訊號</div>
+  <div class="anomaly-card medium">🟡 <strong>每日 GMV 波動大</strong><p>標準差/均值 = 71.8%，最高日與最低日差異顯著</p></div>
+</div>
+
+<footer>Generated by Claude Code · 2026-05-13 17:15</footer>
+
+<script>
+Chart.defaults.color = '#475569';
+const COLORS10 = ['#6366f1','#0ea5e9','#10b981','#f59e0b','#ef4444','#8b5cf6','#ec4899','#14b8a6','#f97316','#94a3b8'];
+const OPT_BASE = {responsive:true,plugins:{legend:{labels:{color:'#475569'}}}};
+const SCALES_XY = {scales:{x:{ticks:{color:'#475569'},grid:{color:'#f1f5f9'}},y:{ticks:{color:'#475569'},grid:{color:'#f1f5f9'}}}};
+
+// 比較模式
+
+
+// 每日 GMV
+new Chart(document.getElementById('dailyGmvChart'),{
+  type:'line',
+  data:{labels:["2026-05-01", "2026-05-02", "2026-05-03", "2026-05-04", "2026-05-05", "2026-05-06", "2026-05-07", "2026-05-08", "2026-05-09", "2026-05-10", "2026-05-11", "2026-05-12"],datasets:[{label:'GMV',data:[37658759, 31651904, 27395625, 24392105, 36432435, 7679857, 5633466, 8822913, 10041511, 11194978, 4815104, 7136339],borderColor:'#6366f1',backgroundColor:'rgba(99,102,241,.12)',fill:true,tension:.4,pointRadius:4}]},
+  options:{...OPT_BASE,...SCALES_XY,plugins:{legend:{display:false}},
+    scales:{x:{ticks:{color:'#475569'},grid:{color:'#f1f5f9'}},
+             y:{ticks:{color:'#475569',callback:v=>'NT$'+(v/10000).toFixed(1)+'萬'},grid:{color:'#f1f5f9'}}}}
+});
+
+// 每日購物車
+new Chart(document.getElementById('dailyCartsChart'),{
+  type:'bar',
+  data:{labels:["2026-05-01", "2026-05-02", "2026-05-03", "2026-05-04", "2026-05-05", "2026-05-06", "2026-05-07", "2026-05-08", "2026-05-09", "2026-05-10", "2026-05-11", "2026-05-12"],datasets:[{label:'購物車數',data:[5031, 4738, 4842, 4318, 5937, 3560, 2875, 2908, 3389, 3970, 2667, 2959],backgroundColor:'rgba(14,165,233,.7)',borderRadius:4}]},
+  options:{...OPT_BASE,...SCALES_XY,plugins:{legend:{display:false}}}
+});
+
+// 每日會員
+new Chart(document.getElementById('dailyMemChart'),{
+  type:'bar',
+  data:{labels:["2026-05-01", "2026-05-02", "2026-05-03", "2026-05-04", "2026-05-05", "2026-05-06", "2026-05-07", "2026-05-08", "2026-05-09", "2026-05-10", "2026-05-11", "2026-05-12"],datasets:[{label:'會員數',data:[3817, 3814, 4247, 3857, 4244, 3131, 2587, 2458, 2783, 3401, 2513, 2757],backgroundColor:'rgba(16,185,129,.7)',borderRadius:4}]},
+  options:{...OPT_BASE,...SCALES_XY,plugins:{legend:{display:false}}}
+});
+
+// 大分類爆品資料 & 互動函式
+const CAT_PRODUCTS = {"3C": [{"name": "【Apple】Apple原廠(AirPods Pro3)", "gmv": 23506908, "pct": 24.5, "qty": 3451, "orders": 1393}, {"name": "【Apple】AirPods4 ANC MXP93TA/A(AP4耳機ANC)", "gmv": 14589045, "pct": 15.2, "qty": 2663, "orders": 1128}, {"name": "【Marshall】Stanmore III 第三代 藍牙喇叭((現貨) 台灣經銷保固18個月)", "gmv": 5175000, "pct": 5.4, "qty": 460, "orders": 130}, {"name": "【OPPO】Reno 15F 6.57吋 5G智慧型手機 12G/256G(贈AWEI T86 ENC降噪藍芽耳機)", "gmv": 4731710, "pct": 4.9, "qty": 424, "orders": 423}, {"name": "【Google】Pixel 10 Pro Fold (16G/256G 月岩灰)", "gmv": 4051620, "pct": 4.2, "qty": 90, "orders": 90}, {"name": "【OPPO】OPPO A6s 大電量5G雙卡機 (6G/128G)(贈AWEI T86 ENC降噪藍芽耳機)", "gmv": 3813637, "pct": 4.0, "qty": 694, "orders": 440}, {"name": "【OPPO】Reno 15F 6.57吋 5G智慧型手機 12G/256G(贈10000mAh行動電源+T86降噪藍芽耳機)", "gmv": 3658000, "pct": 3.8, "qty": 295, "orders": 295}, {"name": "【Apple】iPad 11吋 Wi-Fi 128G藍-2025_MD4A4TA/A(預購商品)(128G)", "gmv": 3248131, "pct": 3.4, "qty": 300, "orders": 140}, {"name": "【OPPO】Reno15 F 6.57吋(12G/256G/高通6Gen1/5000萬鏡頭畫素)", "gmv": 2661045, "pct": 2.8, "qty": 294, "orders": 292}, {"name": "【Apple】AirPods4 MXP63TA/A(AP4耳機)", "gmv": 2395866, "pct": 2.5, "qty": 584, "orders": 236}], "保健/護理": [{"name": "【配方時代】85%高濃度頂級魚油 60顆/盒(2入組)", "gmv": 592854, "pct": 8.0, "qty": 377, "orders": 323}, {"name": "【配方時代】三倍關鍵非變性二型膠原蛋白 30顆/盒(3入組)", "gmv": 312332, "pct": 4.2, "qty": 107, "orders": 107}, {"name": "【配方時代】三倍活力極黑瑪卡 30包/盒(3入組)", "gmv": 183889, "pct": 2.5, "qty": 65, "orders": 65}, {"name": "【亞培】安素原味HMB升級配方(237ml*24入)", "gmv": 167535, "pct": 2.3, "qty": 110, "orders": 86}, {"name": "【配方時代】85%高濃度頂級魚油(60顆/盒)", "gmv": 166424, "pct": 2.3, "qty": 214, "orders": 171}, {"name": "【亞培】葡勝納穩康粉狀糖尿病營養品促銷組(800g*2入)", "gmv": 149506, "pct": 2.0, "qty": 82, "orders": 60}, {"name": "【配方時代】三倍感受金盞花葉黃素(30顆/袋)", "gmv": 141309, "pct": 1.9, "qty": 212, "orders": 146}, {"name": "【配方時代】三倍活力極黑瑪卡(30包/盒)", "gmv": 141306, "pct": 1.9, "qty": 154, "orders": 131}, {"name": "【飲后】超孅飲-奇異果風味6盒(15包/盒)", "gmv": 135338, "pct": 1.8, "qty": 49, "orders": 49}, {"name": "【配方時代】美國專利苦瓜胜肽 60顆/盒(3入組)", "gmv": 129018, "pct": 1.8, "qty": 46, "orders": 42}], "個人清潔": [{"name": "【花王】香皂-優雅花香(130g*6入)", "gmv": 23613, "pct": 2.2, "qty": 291, "orders": 35}, {"name": "【Gillette 吉列】Labs極光系列刮鬍刀頭8入(1盒)", "gmv": 17793, "pct": 1.6, "qty": 27, "orders": 23}, {"name": "【BIODERMA】舒敏高效潔膚液 500ml #新包裝 (4入組)(航空版)", "gmv": 13861, "pct": 1.3, "qty": 14, "orders": 13}, {"name": "【BIODERMA】高效舒敏潔膚液500ml*4入組(航空版)", "gmv": 11680, "pct": 1.1, "qty": 12, "orders": 12}, {"name": "【塩萃 YANCUI】海鹽淨化漱口水 3 盒優惠組(12ml X60入)", "gmv": 11441, "pct": 1.0, "qty": 16, "orders": 6}, {"name": "【IBL 依必朗】胺基酸抗菌洗手露(630g)", "gmv": 11365, "pct": 1.0, "qty": 112, "orders": 18}, {"name": "【LANCOME 蘭蔻】超極光淨緻毛孔洗面乳125ml(航空版)", "gmv": 10861, "pct": 1.0, "qty": 14, "orders": 11}, {"name": "【SABON】明星三部曲沐浴油500ml任選-附壓頭(航空版)", "gmv": 10617, "pct": 1.0, "qty": 18, "orders": 16}, {"name": "【PON PON 澎澎】亮澤滋潤沐浴乳補充包(700g)", "gmv": 10279, "pct": 0.9, "qty": 150, "orders": 30}, {"name": "【落建】洗髮露潔淨健髮配方超值組(潔淨健髮配方400ml*2+男士洗面乳150g)", "gmv": 10073, "pct": 0.9, "qty": 21, "orders": 14}], "圖書文具": [{"name": "【PAPER ONE】PAPER ONE A4 影印紙 70P 70磅 綠包(5包/組)", "gmv": 5165, "pct": 12.4, "qty": 11, "orders": 2}, {"name": "【風信子】環保 再生 影印紙 80磅 80P A4 台灣製 ( 10包/箱)", "gmv": 2260, "pct": 5.4, "qty": 2, "orders": 1}, {"name": "【風車圖書】中英台點讀百科:1200個單字+100句會話+20首歌謠(FOOD超人)", "gmv": 2178, "pct": 5.2, "qty": 2, "orders": 2}, {"name": "【DOUBLE A】多功能 影印紙 A4 (80P 5包/箱)", "gmv": 2085, "pct": 5.0, "qty": 3, "orders": 2}, {"name": "【鹿頭牌】PVC白色易撕膠帶6入(48mm*14M)", "gmv": 2072, "pct": 5.0, "qty": 12, "orders": 1}, {"name": "【KW-trio】強力 雙孔 兩孔 打孔機 (/台 KW-952)", "gmv": 1816, "pct": 4.4, "qty": 1, "orders": 1}, {"name": "【徠福】徠福 手提現金管理箱 顏色隨機出貨 (/ 個 CB-336N)", "gmv": 1775, "pct": 4.3, "qty": 1, "orders": 1}, {"name": "【AURORA 震旦】6張碎斷式碎紙機 AS662C(可碎訂書針信用卡)", "gmv": 1642, "pct": 3.9, "qty": 2, "orders": 2}, {"name": "【PAPER ONE】PAPER ONE A4 影印紙 70P 70磅 綠包(10包/組 )", "gmv": 1640, "pct": 3.9, "qty": 2, "orders": 2}, {"name": "【PLUS 普樂士】三用 A4 裁紙機 可將A3裁A4(/台 26-470 PK-813)", "gmv": 1440, "pct": 3.5, "qty": 1, "orders": 1}], "家用清潔": [{"name": "【ARIEL】抗菌洗衣精/洗衣液補充包-抗菌去漬 1690g x6包", "gmv": 212640, "pct": 7.6, "qty": 229, "orders": 69}, {"name": "【ARIEL】抗菌洗衣精/洗衣液補充包-室內晾衣 1690g x6包", "gmv": 209461, "pct": 7.5, "qty": 223, "orders": 63}, {"name": "【白熊】洗碗精 5kgx4桶", "gmv": 165499, "pct": 5.9, "qty": 260, "orders": 127}, {"name": "【ARIEL】4D抗菌洗衣膠囊補充包-抗菌去漬 30入x10袋", "gmv": 104677, "pct": 3.8, "qty": 58, "orders": 29}, {"name": "【ARIEL】4D抗菌洗衣膠囊補充包-室內晾衣 30入x10袋", "gmv": 73256, "pct": 2.6, "qty": 41, "orders": 20}, {"name": "【白熊】洗碗精(4kg)", "gmv": 63293, "pct": 2.3, "qty": 525, "orders": 74}, {"name": "【日星】沙拉脫(食器專用清潔劑) 5kgx4瓶", "gmv": 57846, "pct": 2.1, "qty": 56, "orders": 27}, {"name": "【橘子工坊】天然濃縮洗衣精-制菌洗淨病毒1500ml x6包", "gmv": 46878, "pct": 1.7, "qty": 60, "orders": 42}, {"name": "【好神拖】輕巧手壓旋轉拖把組手壓拖把架+脫水桶+極細緻布盤*1(1組)", "gmv": 36265, "pct": 1.3, "qty": 57, "orders": 50}, {"name": "【ARIEL】抗菌洗衣精/洗衣液補充包-高效除瞞 1690gx6包", "gmv": 36161, "pct": 1.3, "qty": 39, "orders": 18}], "家電": [{"name": "【Panasonic 國際牌】微電腦微波爐25L(NN-ST34NB)", "gmv": 851587, "pct": 4.6, "qty": 321, "orders": 25}, {"name": "【TATUNG 大同】10人份電鍋(簡配) 紅色(TAC-10L-DCR)", "gmv": 830559, "pct": 4.5, "qty": 362, "orders": 35}, {"name": "【Panasonic 國際牌】掌上型3枚刃電鬍刀(黑)(ES-CM3A-K)", "gmv": 507000, "pct": 2.7, "qty": 200, "orders": 2}, {"name": "【TECO 東元】7-8坪R32一級變頻冷暖5.2KW分離式空調(MA50IH-EJ2/MS50IH-EJ2)", "gmv": 366750, "pct": 2.0, "qty": 14, "orders": 9}, {"name": "【Panasonic 國際牌】變頻微波爐27L /無轉盤(NN-SF564)", "gmv": 251149, "pct": 1.3, "qty": 49, "orders": 49}, {"name": "【TECO 東元】4-5坪R32一級變頻冷暖2.9KW分離式空調(MA28IH-EJ2/MS28IH-EJ2)", "gmv": 209500, "pct": 1.1, "qty": 13, "orders": 11}, {"name": "【ECOVACS 科沃斯】DEEBOT 時尚掃拖機(DEEBOT mini 藍)", "gmv": 208993, "pct": 1.1, "qty": 27, "orders": 27}, {"name": "【HITACHI 日立】3-4坪 R32 一級能效豪華系列變頻冷暖分離式冷氣(RAC-28VP/RAS-28VP)", "gmv": 207229, "pct": 1.1, "qty": 9, "orders": 9}, {"name": "【大同】10人份蘋果白全不鏽鋼TAC-10L-MCS同款電鍋TAC-10L-MCW(TAC-10L-MCW)", "gmv": 201673, "pct": 1.1, "qty": 84, "orders": 84}, {"name": "【Electrolux 伊萊克斯】Well Q6 無線吸塵器 - 花崗岩灰(WQ61-1OGG)", "gmv": 194593, "pct": 1.0, "qty": 52, "orders": 50}], "寵物": [{"name": "【Panasonic 國際牌】台灣製寵物智能複合式攝影飲水餵食機CP-JNF04-W(送Honeywell 增壓除濾蓮蓬頭)", "gmv": 32773, "pct": 3.5, "qty": 3, "orders": 3}, {"name": "【TRILOGY 奇境】無穀全貓糧5kg - 鮮肉乾糧+原肉凍乾(1入組)", "gmv": 29392, "pct": 3.1, "qty": 8, "orders": 8}, {"name": "【EVER CLEAN 藍鑽】【2入組】8.5kg 4倍淨味貓砂-藍標 (購買二件贈送泰國寵物喝水神仙磚)", "gmv": 24572, "pct": 2.6, "qty": 20, "orders": 10}, {"name": "【pidan】混合貓砂 三合一活性碳版(5.2kg*4桶 (共20.8kg)豆腐砂+活性碳+礦砂)", "gmv": 18853, "pct": 2.0, "qty": 17, "orders": 13}, {"name": "【毛孩好朋友】筋肉マスタ 肌肉大師 保健膠囊(2盒)(30粒/盒)", "gmv": 16800, "pct": 1.8, "qty": 12, "orders": 3}, {"name": "【EVER CLEAN 藍鑽】【2入組】8.5kg 多貓抑菌/除臭貓砂 (購買二件(共四箱)贈送泰國寵物喝水神仙磚)", "gmv": 14806, "pct": 1.6, "qty": 13, "orders": 8}, {"name": "【大推】乾狗糧 牛肉口味(15kg)", "gmv": 12190, "pct": 1.3, "qty": 27, "orders": 14}, {"name": "【nutram 紐頓】無穀全能系列 T22/T24 挑嘴全齡貓(5.4KG)", "gmv": 11670, "pct": 1.2, "qty": 6, "orders": 6}, {"name": "【Farmina 法米納】處方犬糧(VDU13狗極低敏處方、12kg)", "gmv": 11500, "pct": 1.2, "qty": 2, "orders": 2}, {"name": "【Farmina 法米納】貓處方飼料(VC4泌尿道結石管理配方、5kg)", "gmv": 10348, "pct": 1.1, "qty": 4, "orders": 3}], "專櫃美妝": [{"name": "【SHISEIDO 資生堂】百優精純乳霜 75ml 2入組(航空版)", "gmv": 312306, "pct": 8.6, "qty": 131, "orders": 126}, {"name": "【ESTEE LAUDER 雅詩蘭黛】特潤超導全方位修護露 100ml 小棕瓶 2入組(航空版)", "gmv": 148044, "pct": 4.1, "qty": 33, "orders": 31}, {"name": "【cle de peau BEAUTE 肌膚之鑰】光采無瑕妝前凝霜 37ml(航空版)", "gmv": 93182, "pct": 2.6, "qty": 93, "orders": 84}, {"name": "【SHISEIDO 資生堂】百優精純乳霜 75ml(航空版)", "gmv": 89285, "pct": 2.4, "qty": 76, "orders": 66}, {"name": "【SK-II】青春露+亮采化粧水 公司貨((青春露330ml+化粧水10ml))", "gmv": 62405, "pct": 1.7, "qty": 14, "orders": 13}, {"name": "【SHISEIDO 資生堂】百優精純乳霜 75ml 4入組(航空版)", "gmv": 57639, "pct": 1.6, "qty": 12, "orders": 10}, {"name": "【LANCOME 蘭蔻】超極限肌因賦活露 115ml 2入組(航空版)", "gmv": 55980, "pct": 1.5, "qty": 10, "orders": 10}, {"name": "【Kiehl's 契爾氏】激光極淨白淡斑精華 115ml(航空版)", "gmv": 44706, "pct": 1.2, "qty": 22, "orders": 21}, {"name": "【SHISEIDO 資生堂】百優精純乳霜 75ml+紅妍山茶花修護精華 75ml 優惠組合(航空版)", "gmv": 36567, "pct": 1.0, "qty": 15, "orders": 15}, {"name": "【SISLEY 希思黎】全能乳液125ml 新版(航空版)", "gmv": 33636, "pct": 0.9, "qty": 11, "orders": 10}], "居家生活": [{"name": "【ETQ USA】1600W高壓清洗機(無)", "gmv": 77910, "pct": 4.1, "qty": 42, "orders": 42}, {"name": "【樂嫚妮】3.5坪韓國製免膠無痕地板(6色)", "gmv": 51094, "pct": 2.7, "qty": 8, "orders": 4}, {"name": "【dayneeds】荷重型 180x60x240公分 四層波浪架(電鍍鎖管)", "gmv": 33616, "pct": 1.8, "qty": 8, "orders": 2}, {"name": "【喜光全光譜】TIONE+ 鈦珈白底座款 LED光健康護眼檯燈(嘖嘖熱銷400萬)", "gmv": 33008, "pct": 1.7, "qty": 13, "orders": 10}, {"name": "【德泰】索歐系列 900加網 彈簧床墊(雙人5尺 152x188cm)", "gmv": 24829, "pct": 1.3, "qty": 1, "orders": 1}, {"name": "【ONE HOUSE】80寬 500L 品匠雙開磁吸折疊收納櫃-五層(收納箱/置物櫃/收納箱/廚房收納)", "gmv": 22506, "pct": 1.2, "qty": 19, "orders": 14}, {"name": "【KEYWAY 聯府】K600 掀蓋式滑輪整理箱(6入)", "gmv": 20383, "pct": 1.1, "qty": 16, "orders": 4}, {"name": "【喜特麗】上掀門廚房收納櫃JT-B698(全省安裝 7-11商品卡1200元)", "gmv": 18040, "pct": 0.9, "qty": 2, "orders": 2}, {"name": "【MR.BOX】60&70面寬 豎紋摺疊式五層/四層櫃(附輪)", "gmv": 16883, "pct": 0.9, "qty": 28, "orders": 22}, {"name": "【STYLE格.調】 加粗38管徑-2米不鏽鋼伸縮-三桿防風曬衣架-附輪   (晾衣架/衣架/曬棉被架/掛衣架/吊衣架/雙桿衣架/X型衣架/防風衣架)", "gmv": 16124, "pct": 0.8, "qty": 13, "orders": 12}], "戶外/運動": [{"name": "【PHILIPS 飛利浦】FIT3102T 飛利浦感應變速跑步機-小赤狐(一件)", "gmv": 65100, "pct": 11.5, "qty": 4, "orders": 4}, {"name": "Tri-Aid 急救三角 按摩三角 解除痠痛 放鬆肌肉 頭痛救星 「澳洲原廠授權代理經銷」(1入)", "gmv": 37616, "pct": 6.6, "qty": 39, "orders": 39}, {"name": "【巧福】溫熱垂直律動機 UC-997(抖抖機/動動機/震動機/律動奇機)(一台)", "gmv": 20324, "pct": 3.6, "qty": 6, "orders": 6}, {"name": "【PHILIPS 飛利浦】FIT3105T 飛利浦緩震跑步機-小黑貂(一件)", "gmv": 18300, "pct": 3.2, "qty": 1, "orders": 1}, {"name": "【UREVO】URTM038 CyberPad for Home智能緩坡機(一件)", "gmv": 16400, "pct": 2.9, "qty": 1, "orders": 1}, {"name": "【BH】G33 Pro Any Go 扶手健步慢跑機(一件)", "gmv": 14700, "pct": 2.6, "qty": 1, "orders": 1}, {"name": "【LOJEL】CUBO升級版29.5吋上掀式擴充胖胖箱(七色)", "gmv": 13365, "pct": 2.4, "qty": 1, "orders": 1}, {"name": "【SIMPLITE】迷你口袋筋膜槍 藍色(頭部按摩臉部按摩超靜音迷你輕巧)", "gmv": 13280, "pct": 2.3, "qty": 11, "orders": 11}, {"name": "【AOTTO】150加寬桌面手提式折疊式戶外露營桌(1入)", "gmv": 10174, "pct": 1.8, "qty": 10, "orders": 1}, {"name": "【SIMPLITE】迷你口袋筋膜槍 奶茶色(頭部按摩臉部按摩超靜音迷你輕巧)", "gmv": 8706, "pct": 1.5, "qty": 7, "orders": 7}], "日用/紙品": [{"name": "【春風】抽取式衛生紙(130抽x12包x6串)", "gmv": 334857, "pct": 5.7, "qty": 405, "orders": 293}, {"name": "【CONSOFY】3層抽取衛生紙 (120抽x24包x3串)", "gmv": 257700, "pct": 4.4, "qty": 288, "orders": 222}, {"name": "【來復易】防漏安心復健褲L號(14片x4包)", "gmv": 229783, "pct": 3.9, "qty": 211, "orders": 104}, {"name": "【五月花】厚棒4層抽取式衛生紙 (90抽x10包x6串)", "gmv": 206360, "pct": 3.5, "qty": 199, "orders": 110}, {"name": "【來復易】防漏安心復健褲XL號(12片x4包)", "gmv": 186773, "pct": 3.2, "qty": 171, "orders": 83}, {"name": "【舒潔】棉柔舒適抽取衛生紙 (110抽x12包x5串)", "gmv": 162913, "pct": 2.8, "qty": 207, "orders": 142}, {"name": "【得意】廚房紙巾(70組x6捲x8袋)", "gmv": 153430, "pct": 2.6, "qty": 295, "orders": 105}, {"name": "【來復易】整夜一片就安心紙尿片(33片x6包)", "gmv": 142897, "pct": 2.4, "qty": 127, "orders": 92}, {"name": "【添寧】貼心敢動褲L-XL(10片x6包)", "gmv": 129678, "pct": 2.2, "qty": 129, "orders": 73}, {"name": "【倍潔雅】柔軟舒適抽取式衛生紙(110抽x12包x8串)", "gmv": 125266, "pct": 2.1, "qty": 188, "orders": 96}], "服飾內著": [{"name": "【PP 石墨烯】石墨烯蠶絲助眠眼罩2件(送晶亮立克體驗(10粒)1盒)", "gmv": 28332, "pct": 21.2, "qty": 11, "orders": 11}, {"name": "【PP 石墨烯】石墨烯打卡褲_九分褲2件_林美秀吳淡如代言推薦(送高腰女內褲(隨機色)2件)", "gmv": 9660, "pct": 7.2, "qty": 2, "orders": 2}, {"name": "【PP 石墨烯】石墨烯打卡褲_九分褲2件_愛莉莎莎代言推薦(送高腰女內褲(隨機色)2件)", "gmv": 9290, "pct": 7.0, "qty": 2, "orders": 2}, {"name": "【PP 石墨烯】石墨烯粒線修復女內褲4件(醫師Ｘ博士雙專業推薦)", "gmv": 7512, "pct": 5.6, "qty": 2, "orders": 2}, {"name": "【PP 石墨烯】石墨烯粒線智能修復衣3件(林美秀愛用推薦)", "gmv": 7143, "pct": 5.4, "qty": 2, "orders": 2}, {"name": "【西班牙 MATT】AH-31軍規GORE-TEX(24H)防曬頂級透氣盤帽(防水28000mm)", "gmv": 4768, "pct": 3.6, "qty": 5, "orders": 3}, {"name": "【西班牙 MATT】AH-G32日本版軍規GORE-TEX/PRO(24H)頂級防水30000mm頂級透氣盤帽(帽圍加大可調整)", "gmv": 4724, "pct": 3.5, "qty": 5, "orders": 5}, {"name": "【PP 石墨烯】石墨烯塑崩褲氣動版造型款2件_林美秀吳淡如代言推薦(送平口女內褲(隨機色)2件)", "gmv": 4415, "pct": 3.3, "qty": 1, "orders": 1}, {"name": "【PP 石墨烯】石墨烯塑崩褲1件+石墨烯Y字領內衣1件(+送機能衣物萬用精1瓶)", "gmv": 3999, "pct": 3.0, "qty": 1, "orders": 1}, {"name": "【PP 石墨烯】石墨烯蠶絲助眠眼罩(1件)", "gmv": 3760, "pct": 2.8, "qty": 2, "orders": 1}], "母嬰用品": [{"name": "【滿意寶寶】活潑寶寶巧薄紙尿褲XL號(38+2片)x5包", "gmv": 158715, "pct": 9.1, "qty": 156, "orders": 35}, {"name": "【俏皮寶寶】潔膚濕巾補充包(80片x3包)x6組", "gmv": 116917, "pct": 6.7, "qty": 212, "orders": 108}, {"name": "【滿意寶寶】活潑寶寶巧薄紙尿褲L號(44+2片)x5包", "gmv": 98510, "pct": 5.6, "qty": 96, "orders": 32}, {"name": "【滿意寶寶】瞬潔乾爽輕巧褲XXL號 26片x3包", "gmv": 75420, "pct": 4.3, "qty": 92, "orders": 45}, {"name": "【滿意寶寶】活潑寶寶巧薄紙尿褲XXL號 29片x4包", "gmv": 71663, "pct": 4.1, "qty": 76, "orders": 29}, {"name": "【S-26】金愛兒樂嬰兒配方再升級版(850g)", "gmv": 59026, "pct": 3.4, "qty": 73, "orders": 39}, {"name": "【滿意寶寶】瞬潔乾爽輕巧褲XL號 38片x4包", "gmv": 54845, "pct": 3.1, "qty": 49, "orders": 20}, {"name": "【幫寶適】極上守護散熱拉拉褲 XXL號 24片x3包", "gmv": 47443, "pct": 2.7, "qty": 49, "orders": 30}, {"name": "【幫寶適】極上守護散熱拉拉褲 XL號 32片x3包", "gmv": 40184, "pct": 2.3, "qty": 42, "orders": 32}, {"name": "【康乃馨】寶寶潔膚濕巾補充包-超厚型 (80片x3入)x6組", "gmv": 35309, "pct": 2.0, "qty": 64, "orders": 35}], "汽機車百貨": [{"name": "【Mobil 美孚】美孚Special plus 10w40機油(1000ml)", "gmv": 17857, "pct": 12.9, "qty": 169, "orders": 10}, {"name": "【CPC 國光牌】千里馬4T機油10W/40(1入)", "gmv": 10179, "pct": 7.4, "qty": 63, "orders": 10}, {"name": "【Mobil 美孚】美孚一號0W20先進全合成機油(1000ml)", "gmv": 9231, "pct": 6.7, "qty": 44, "orders": 8}, {"name": "【海鷗】泰國INDEX-TESLA騎士素色安全帽(台灣獨家經銷)", "gmv": 7146, "pct": 5.2, "qty": 3, "orders": 3}, {"name": "【elf】MOTO 4T TECH 10W-50 機油1L(1瓶)", "gmv": 5816, "pct": 4.2, "qty": 24, "orders": 4}, {"name": "【CPC 國光牌】9000SM全合成車用機油(1L)(.)", "gmv": 5255, "pct": 3.8, "qty": 22, "orders": 4}, {"name": "【Mobil 美孚】美孚1號 5W30 全合成機油(5W30)", "gmv": 4578, "pct": 3.3, "qty": 22, "orders": 4}, {"name": "【安伯特】12V修復電瓶充電器(汽車/機車/小貨車/電瓶修復)", "gmv": 4201, "pct": 3.0, "qty": 9, "orders": 9}, {"name": "【CPC 國光牌】牌超靜音SL車用機油-5W/50(1L)(.)", "gmv": 4080, "pct": 3.0, "qty": 20, "orders": 2}, {"name": "【CPC 國光牌】9000 C3全合成柴油車用機油5W/30(1罐/1L)", "gmv": 4007, "pct": 2.9, "qty": 13, "orders": 2}], "票券": [{"name": "【王品集團】夏慕尼 商品券（$1,280元+10%）_實體餐券(八入組)", "gmv": 2834000, "pct": 28.4, "qty": 260, "orders": 260}, {"name": "【西堤】西堤套餐（698元+10%） 商品券(八入組)", "gmv": 1739800, "pct": 17.4, "qty": 300, "orders": 150}, {"name": "【煙波大飯店】聯合住宿券（四張組）_實體紙券(有效期限 2026/09/30)", "gmv": 1495000, "pct": 15.0, "qty": 130, "orders": 130}, {"name": "【饗賓集團】饗食天堂 假日晚餐餐券 NT1199(五入組)", "gmv": 1250000, "pct": 12.5, "qty": 200, "orders": 100}, {"name": "【饗賓集團】饗食天堂 平日下午茶餐券 NT$800(五入組)", "gmv": 1166200, "pct": 11.7, "qty": 280, "orders": 94}, {"name": "【西堤】西堤牛排 商品券 $698+10%(四入組)", "gmv": 239350, "pct": 2.4, "qty": 85, "orders": 76}, {"name": "【陶板屋】陶板屋套餐 $698+10% 商品券(四入組)", "gmv": 202900, "pct": 2.0, "qty": 72, "orders": 62}, {"name": "【陶板屋】和風洋食料理套餐商品券(10張組↘)", "gmv": 129882, "pct": 1.3, "qty": 18, "orders": 18}, {"name": "【蘭城晶英酒店】平日一泊二食 精緻客房住宿券(有效期限 2028/6/30)", "gmv": 98704, "pct": 1.0, "qty": 11, "orders": 10}, {"name": "【老爺集團】聯合住宿券(有效期限 2027/06/30)", "gmv": 94600, "pct": 0.9, "qty": 28, "orders": 15}], "精品鞋包": [{"name": "【童樂繪金飾】3台錢 幸運星luckystar 黃金金塊金條 媽祖賜福獨家設計 (參台錢11.25g)", "gmv": 121176, "pct": 20.8, "qty": 2, "orders": 2}, {"name": "【港口王】純金小金豆0.5錢(贈玻璃小金瓶)", "gmv": 85220, "pct": 14.6, "qty": 9, "orders": 5}, {"name": "【童樂繪金飾】1台錢 幸運星luckystar 黃金貔貅金塊金條 (壹台錢3.75g)", "gmv": 80996, "pct": 13.9, "qty": 4, "orders": 4}, {"name": "【童樂繪金飾】黃金9999幸運星luckystar小金豆1錢", "gmv": 80260, "pct": 13.8, "qty": 4, "orders": 4}, {"name": "【Prisme Gold】黃金項鍊 母親節送禮 馨情盛放純金999項鍊 任選 贈玫瑰禮盒賀卡(約0.13錢±0.03)", "gmv": 29840, "pct": 5.1, "qty": 7, "orders": 4}, {"name": "【童樂繪金飾】黃金9999純金 1克 1g金磚/金條 幸運星LuckyStar(一公克金塊 投資/收藏/保值)", "gmv": 23360, "pct": 4.0, "qty": 4, "orders": 3}, {"name": "【TLH】黃金項鍊 浪漫雪花 純金999 約重0.69錢±0.05(附卡片 送禮 交換禮物)", "gmv": 21357, "pct": 3.7, "qty": 1, "orders": 1}, {"name": "【Porsche Design 保時捷】限量3折 德國頂級小牛皮拉鍊長夾皮夾 全新專櫃展示品(黑色 OSO9915BK)", "gmv": 13043, "pct": 2.2, "qty": 1, "orders": 1}, {"name": "【Prisme Gold】黃金項鍊 純金999墜飾 黃金鍊墜項鍊 任選 附贈禮盒｜母親節 送禮(約0.02錢±0.01)", "gmv": 11541, "pct": 2.0, "qty": 14, "orders": 14}, {"name": "【童樂繪金飾】黃金9999幸運星luckystar小金豆0.2錢", "gmv": 8180, "pct": 1.4, "qty": 2, "orders": 2}], "視聽娛樂": [{"name": "【Nintendo 任天堂】NS2 瑪利歐賽車世界同捆盒裝主機+NS2 攝影機+保護貼+收納包(台灣公司貨)", "gmv": 5908500, "pct": 14.3, "qty": 384, "orders": 314}, {"name": "【Nintendo 任天堂】<現貨> NS2 主機 瑪利歐賽車 世界同捆組 (內含瑪利歐賽車世界遊戲片) + 玻璃貼 + 硬殼包(台灣公司貨)", "gmv": 5889670, "pct": 14.3, "qty": 409, "orders": 409}, {"name": "【Nintendo 任天堂】NS2 主機 瑪利歐賽車 世界彩繪盒裝 (不含遊戲片) + NS2 超級瑪利歐派對 空前盛會(台灣公司貨)", "gmv": 5388917, "pct": 13.1, "qty": 354, "orders": 132}, {"name": "【Nintendo 任天堂】NS2 主機 彩繪盒裝 (不含瑪利歐賽車遊戲片) + NS2 奇幻生活 i 日文封面中文版(主機為台灣公司貨)", "gmv": 4761966, "pct": 11.5, "qty": 313, "orders": 128}, {"name": "【Nintendo 任天堂】Switch OLED 斯普拉頓3 漆彈大作戰3(限定版主機)", "gmv": 4658040, "pct": 11.3, "qty": 513, "orders": 117}, {"name": "【Nintendo 任天堂】NS2 主機 瑪利歐賽車 世界彩繪盒裝 (不含遊戲片) + NS2 牧場物語 來吧！風之繁華市集(台灣公司貨)", "gmv": 3607321, "pct": 8.7, "qty": 237, "orders": 96}, {"name": "【Nintendo 任天堂】NS2 主機 瑪利歐賽車 世界彩繪盒裝 (不含遊戲片) + NS2 寶可夢 Pokopia(台灣公司貨)", "gmv": 2162148, "pct": 5.2, "qty": 141, "orders": 91}, {"name": "【Nintendo 任天堂】NS2 主機 瑪利歐賽車 世界彩繪盒裝 (不含遊戲片) + NS2 寶可夢傳說 Z-A((台灣公司貨))", "gmv": 1883354, "pct": 4.6, "qty": 123, "orders": 92}, {"name": "【Nintendo 任天堂】NS2 SWITCH2 瑪利歐賽車世界同捆主機 + 玻璃貼 + 收納包(中文版 台灣公司貨)", "gmv": 1478000, "pct": 3.6, "qty": 100, "orders": 100}, {"name": "【Nintendo 任天堂】 NS Switch 瑪利歐派對 超級巨星 中文版(台灣公司貨)", "gmv": 561840, "pct": 1.4, "qty": 462, "orders": 133}], "車類": [{"name": "【Gogoro】預購Delight(GM7R2)", "gmv": 786280, "pct": 28.1, "qty": 9, "orders": 9}, {"name": "【Gogoro】預購VIVA XL BELT(GSP6DT)", "gmv": 541280, "pct": 19.3, "qty": 7, "orders": 7}, {"name": "【Gogoro】預購VIVA XL ME(GSP6DT)", "gmv": 479280, "pct": 17.1, "qty": 6, "orders": 6}, {"name": "【Gogoro】預購VIVA MIX BELT(GJ6C2)", "gmv": 440580, "pct": 15.7, "qty": 6, "orders": 6}, {"name": "【Gogoro】預購EZZY 500(GE5XK)", "gmv": 365400, "pct": 13.1, "qty": 5, "orders": 5}, {"name": "【Gogoro】預購Premium(GB6RD)", "gmv": 83800, "pct": 3.0, "qty": 1, "orders": 1}, {"name": "【Gogoro】預購VIVA MIX ME(GJ6C2)", "gmv": 79880, "pct": 2.9, "qty": 1, "orders": 1}, {"name": "【WINDCAT】W21 21速摺疊車", "gmv": 4880, "pct": 0.2, "qty": 2, "orders": 2}, {"name": "【DIVANO】C127 日本21速彎把高碳鋼碟煞鋼管公路車(SHIMANO A050)", "gmv": 3850, "pct": 0.1, "qty": 1, "orders": 1}, {"name": "【DIVANO】20吋單速低跨淑女車", "gmv": 3750, "pct": 0.1, "qty": 1, "orders": 1}], "開架美妝": [{"name": "【LA ROCHE-POSAY 理膚寶水】B5+全面修復霜100ml 2入組(航空版)", "gmv": 33620, "pct": 6.2, "qty": 41, "orders": 34}, {"name": "【Avene 雅漾】舒護活泉水 300ml 四入組(航空版)", "gmv": 20559, "pct": 3.8, "qty": 23, "orders": 21}, {"name": "【古寶無患子】玉容深層亮白水凝乳100ml(4入)", "gmv": 16492, "pct": 3.1, "qty": 19, "orders": 3}, {"name": "【EVEG】預購 EVEG 黑繃帶緊頸拉絲霜(100ml)", "gmv": 15426, "pct": 2.9, "qty": 115, "orders": 115}, {"name": "【Avene 雅漾】舒護活泉水 300ml 6入組(航空版)", "gmv": 15264, "pct": 2.8, "qty": 12, "orders": 9}, {"name": "【CeraVe 適樂膚】全效水光B5玻尿酸修護精華 公司貨(30ml)", "gmv": 12942, "pct": 2.4, "qty": 22, "orders": 10}, {"name": "【OLAY 歐蕾】多元修護晚霜(50g)", "gmv": 9684, "pct": 1.8, "qty": 23, "orders": 12}, {"name": "【OLAY 歐蕾】多效防曬日霜優惠組(.)", "gmv": 9616, "pct": 1.8, "qty": 13, "orders": 10}, {"name": "【ReVive 利維膚】光采再生活膚霜-經典型50ml(公司貨)", "gmv": 9406, "pct": 1.7, "qty": 3, "orders": 3}, {"name": "【LA ROCHE-POSAY 理膚寶水】B5+全面修復霜100ml 6入組(航空版)", "gmv": 7980, "pct": 1.5, "qty": 3, "orders": 2}], "食品/料理": [{"name": "【台糖】大豆沙拉油 3Lx6瓶", "gmv": 90758, "pct": 1.7, "qty": 99, "orders": 57}, {"name": "【三好米】鮮長米(12kg)", "gmv": 90285, "pct": 1.7, "qty": 172, "orders": 102}, {"name": "【台糖】大豆沙拉油(3L)", "gmv": 83387, "pct": 1.5, "qty": 527, "orders": 104}, {"name": "【樂米穀場】花蓮富里產-初雪美姬米(一等米)1.5kgx6包", "gmv": 81160, "pct": 1.5, "qty": 104, "orders": 73}, {"name": "【Dan-D Pak】無調味綜合堅果(無鹽)(1130g)", "gmv": 68368, "pct": 1.3, "qty": 145, "orders": 99}, {"name": "【得意的一天】100%純葵花油 2Lx6瓶", "gmv": 52809, "pct": 1.0, "qty": 44, "orders": 33}, {"name": "【樂米穀場】台東關山好米(9kg)", "gmv": 47955, "pct": 0.9, "qty": 90, "orders": 41}, {"name": "【大倉米鋪】台灣越光米(一等米) 1.5kgx12包", "gmv": 46802, "pct": 0.9, "qty": 44, "orders": 38}, {"name": "【樂米穀場】花蓮富里產有機栽培雪姬之星(一等米) 1.5kgx6包", "gmv": 36569, "pct": 0.7, "qty": 42, "orders": 35}, {"name": "【金莎】意大利金莎金鑽禮盒 300g(300g/盒)", "gmv": 31962, "pct": 0.6, "qty": 114, "orders": 6}], "飲料/沖調": [{"name": "【可口可樂】曲線瓶600mlx24瓶", "gmv": 562977, "pct": 5.7, "qty": 1737, "orders": 388}, {"name": "【悅氏】Light鹼性水720mlx20瓶", "gmv": 448993, "pct": 4.5, "qty": 2838, "orders": 705}, {"name": "【黑松】FIN補給飲料 (300mlx6入)x4組", "gmv": 278144, "pct": 2.8, "qty": 1774, "orders": 584}, {"name": "【泰山】純水  2500mlx6瓶", "gmv": 164759, "pct": 1.7, "qty": 903, "orders": 282}, {"name": "【RED COW紅牛】100%全脂奶粉  2.1kgx6罐", "gmv": 158542, "pct": 1.6, "qty": 58, "orders": 47}, {"name": "【愛之味】健康的油切分解茶(無糖) (590mlx6入)x4組", "gmv": 153803, "pct": 1.6, "qty": 344, "orders": 213}, {"name": "【泰山】純水700mlx20瓶", "gmv": 144301, "pct": 1.5, "qty": 613, "orders": 245}, {"name": "【悅氏】Light礦泉氣泡水  520mlx24瓶", "gmv": 138114, "pct": 1.4, "qty": 500, "orders": 266}, {"name": "【Crystal Valley礦沛】氣泡水 585mlx24瓶", "gmv": 136649, "pct": 1.4, "qty": 412, "orders": 238}, {"name": "【波蜜】靠茶四季青茶-無糖580mlx24瓶", "gmv": 129539, "pct": 1.3, "qty": 563, "orders": 254}], "餐廚用品": [{"name": "【TiANN 鈦安】純鈦 大款砧板(36x30cm-贈鈦好擦30x36cm)", "gmv": 59567, "pct": 3.9, "qty": 43, "orders": 39}, {"name": "【BRITA】MAXTRA Pro濾芯-去水垢(9入)", "gmv": 51574, "pct": 3.4, "qty": 34, "orders": 31}, {"name": "【TiANN 鈦安】純鈦素色大款砧板+中砧板鯨魚版(36x30cm/28x23cm-贈鈦好擦30x36cm)", "gmv": 45052, "pct": 3.0, "qty": 20, "orders": 20}, {"name": "【TiKOBO 鈦工坊】純鈦鯨魚杯2代(800ml- 贈細吸管 / 贈備品套組)", "gmv": 43624, "pct": 2.9, "qty": 21, "orders": 21}, {"name": "【Tefal 特福】巧變精靈系列不沾鍋4件組-天空藍(適用電磁爐)", "gmv": 31541, "pct": 2.1, "qty": 19, "orders": 19}, {"name": "【BRITA】英國製 MAXTRA Pro All-in-1 純淨全效型濾芯 6入 BRITA 濾水壺適用(原裝平輸)", "gmv": 25142, "pct": 1.7, "qty": 25, "orders": 22}, {"name": "【Queen Chef】英國礦岩鑄造鈦合金大理石不沾鍋(32cm 深煎鍋平底鍋 IH適用)", "gmv": 22724, "pct": 1.5, "qty": 23, "orders": 20}, {"name": "【極 KIWAME】PREMIUM  日本炒鍋30cm(日本製)(30cm)", "gmv": 20617, "pct": 1.4, "qty": 10, "orders": 10}, {"name": "【MASIONS 美心】PREMIUM 可微波 皇家316不鏽鋼矽膠玻璃蓋抗菌保鮮盒(大容量豪華6件組)", "gmv": 18925, "pct": 1.2, "qty": 18, "orders": 16}, {"name": "【Tefal 特福】全新鈦升級-爵士系列30CM不沾鍋深平+28CM炒鍋(2入組)", "gmv": 15386, "pct": 1.0, "qty": 16, "orders": 16}]};
+function showCatTop10(cat) {
+  const data = CAT_PRODUCTS[cat];
+  if (!data || !data.length) return;
+  function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  document.getElementById('cat-top10-title').textContent = '🔥 ' + cat + ' 爆品 Top 10';
+  document.getElementById('cat-top10-body').innerHTML = data.map((p,i) =>
+    '<tr><td>'+(i+1)+'</td><td class="prod-name">'+esc(p.name)+'</td>'+
+    '<td>NT$ '+p.gmv.toLocaleString()+'</td>'+
+    '<td class="pct-cell">'+p.pct+'%</td>'+
+    '<td>'+p.qty.toLocaleString()+'</td>'+
+    '<td>'+p.orders.toLocaleString()+'</td></tr>'
+  ).join('');
+  const panel = document.getElementById('cat-top10');
+  panel.style.display = 'block';
+  setTimeout(()=>panel.scrollIntoView({behavior:'smooth',block:'nearest'}), 50);
+}
+
+// 大分類
+const bigCatChart = new Chart(document.getElementById('bigCatChart'),{
+  type:'bar',
+  data:{labels:["3C", "視聽娛樂", "家電", "票券", "飲料/沖調", "保健/護理", "日用/紙品", "食品/料理", "專櫃美妝", "車類", "家用清潔", "居家生活", "母嬰用品", "餐廚用品", "個人清潔", "寵物", "精品鞋包", "戶外/運動", "開架美妝", "汽機車百貨", "服飾內著", "圖書文具"],datasets:[{label:'GMV',data:[95841329, 41263233, 18656201, 9983856, 9905696, 7364961, 5919274, 5468548, 3646915, 2799238, 2785432, 1906628, 1745664, 1520613, 1098051, 947865, 582412, 566955, 539176, 137967, 133392, 41590],backgroundColor:COLORS10,borderRadius:4}]},
+  options:{indexAxis:'y',...OPT_BASE,...SCALES_XY,plugins:{legend:{display:false}},
+    onClick:(e,els)=>{ if(els.length) showCatTop10(bigCatChart.data.labels[els[0].index]); },
+    onHover:(e,els)=>{ e.native.target.style.cursor = els.length?'pointer':'default'; },
+    scales:{x:{ticks:{color:'#475569',callback:v=>(v/10000).toFixed(0)+'萬'},grid:{color:'#f1f5f9'}},
+             y:{ticks:{color:'#475569'},grid:{display:false}}}}
+});
+
+// 中分類
+new Chart(document.getElementById('midCatChart'),{
+  type:'bar',
+  data:{labels:["Apple", "Nintendo 任天堂", "手機/平板", "美食餐券", "廚房家電", "穿戴裝置", "臉部保養", "衛生紙", "季節家電", "電動車/滑板", "水", "瓶裝茶/奶茶", "洗衣設備", "成人紙褲", "冷/暖氣機"],datasets:[{label:'GMV',data:[56705415, 39488788, 29079554, 8121648, 6624815, 5981870, 3237439, 3191403, 3161978, 2776500, 2436457, 2216552, 2178453, 2130087, 2017549],backgroundColor:'rgba(99,102,241,.7)',borderRadius:4}]},
+  options:{indexAxis:'y',...OPT_BASE,...SCALES_XY,plugins:{legend:{display:false}},
+    scales:{x:{ticks:{color:'#475569',callback:v=>(v/10000).toFixed(0)+'萬'},grid:{color:'#f1f5f9'}},
+             y:{ticks:{color:'#475569',font:{size:11}},grid:{display:false}}}}
+});
+
+// 折價券
+new Chart(document.getElementById('couponChart'),{
+  type:'bar',
+  data:{labels:["55狂買節★滿50,000折5000元", "55狂買節★滿15,000折1500元", "55狂買節★滿10,000折1000元", "購物車滿1500折抵100元", "購物車滿5000折抵500元", "首購限定★滿888折100元"],datasets:[{label:'總折扣金額',data:[5920000.0, 4312500.0, 1568000.0, 852400.0, 610000.0, 416900.0],backgroundColor:'rgba(139,92,246,.75)',borderRadius:4}]},
+  options:{indexAxis:'y',...OPT_BASE,...SCALES_XY,plugins:{legend:{display:false}},
+    scales:{
+      x:{ticks:{color:'#475569',callback:v=>(v/10000).toFixed(1)+'萬'},grid:{color:'#f1f5f9'},
+          title:{display:true,text:'總折扣（萬）',color:'#64748b',font:{size:11}}},
+      y:{ticks:{color:'#475569',font:{size:11}},grid:{display:false}}
+    }
+  }
+});
+
+// 行銷活動
+new Chart(document.getElementById('actChart'),{
+  type:'bar',
+  data:{labels:["首購限定★指定品滿一件7折", "限時特降價", "金盛世滿850折120,金盛世滿850折120", "品牌直享95折", "康那香指定品95折,康那香指定品95折,康那香滿1000現折100,康那香滿1000現折100", "保健★滿額享9折", "康那香滿1000現折100,康那香滿1000現折100", "永豐餘滿849折100,永豐餘滿849折100", "首購限定★指定品滿一件7折,金盛世滿850折120,金盛世滿850折120", "首購限定★指定品滿一件7折,保健★滿額享9折"],datasets:[{label:'折扣金額',data:[1585242.0, 435878.0, 104640.0, 80276.0, 60344.0, 44851.0, 41322.0, 38426.0, 37040.0, 36648.0],backgroundColor:'rgba(139,92,246,.7)',borderRadius:4}]},
+  options:{indexAxis:'y',...OPT_BASE,...SCALES_XY,plugins:{legend:{display:false}},
+    scales:{x:{ticks:{color:'#475569',callback:v=>'NT$'+(v/10000).toFixed(1)+'萬'},grid:{color:'#f1f5f9'}},
+             y:{ticks:{color:'#475569',font:{size:11}},grid:{display:false}}}}
+});
+
+// 付款方式
+new Chart(document.getElementById('payChart'),{
+  type:'doughnut',
+  data:{labels:["PxPay信用卡", "全支付信用卡", "TapPay信用卡", "PxPay儲值金", "全支付儲值金", "TapPay信用卡分期-12期", "全支付銀行帳戶", "TapPay信用卡分期-6期", "TapPay信用卡分期-3期"],datasets:[{data:[66714295, 66465721, 32821264, 24778801, 3067583, 2613533, 2575402, 601827, 520601],backgroundColor:COLORS10}]},
+  options:{...OPT_BASE}
+});
+
+// 性別
+new Chart(document.getElementById('genderChart'),{
+  type:'doughnut',
+  data:{labels:["女", "男"],datasets:[{data:[19687, 11434],backgroundColor:['#f472b6','#60a5fa','#94a3b8']}]},
+  options:{...OPT_BASE}
+});
+
+// 地區
+new Chart(document.getElementById('regionChart'),{
+  type:'bar',
+  data:{labels:["新北市", "臺北市", "高雄市", "臺中市", "桃園市", "臺南市", "彰化縣", "新竹縣", "新竹市", "屏東縣", "苗栗縣", "基隆市"],datasets:[{label:'訂單數',data:[15461, 11477, 10086, 9267, 7760, 7629, 2840, 2396, 2158, 1607, 1540, 1497],backgroundColor:'rgba(20,184,166,.7)',borderRadius:4}]},
+  options:{indexAxis:'y',...OPT_BASE,...SCALES_XY,plugins:{legend:{display:false}},
+    scales:{x:{ticks:{color:'#475569'},grid:{color:'#f1f5f9'}},y:{ticks:{color:'#475569'},grid:{display:false}}}}
+});
+
+// 年齡 × 性別
+new Chart(document.getElementById('ageCrossChart'),{
+  type:'bar',
+  data:{
+    labels:["<25", "25-29", "30-34", "35-39", "40-44", "45-49", "50-54", "55-59", "60+"],
+    datasets:[
+      {label:'男',data:[370, 574, 938, 1324, 1768, 1860, 1591, 1238, 1766],backgroundColor:'rgba(96,165,250,.8)',borderRadius:4},
+      {label:'女',data:[638, 890, 1615, 2148, 2937, 3460, 2929, 2547, 2493],backgroundColor:'rgba(244,114,182,.8)',borderRadius:4}
+    ]
+  },
+  options:{...OPT_BASE,...SCALES_XY,
+    scales:{x:{stacked:true,ticks:{color:'#475569'},grid:{display:false}},
+             y:{stacked:true,ticks:{color:'#475569'},grid:{color:'#f1f5f9'}}}}
+});
+
+// 客單價分布
+new Chart(document.getElementById('valDistChart'),{
+  type:'bar',
+  data:{labels:["<500", "500-1K", "1K-3K", "3K-10K", "10K-30K", "30K+"],datasets:[{label:'購物車數',data:[7061, 12991, 15021, 4957, 5770, 1394],backgroundColor:'rgba(99,102,241,.7)',borderRadius:4}]},
+  options:{...OPT_BASE,...SCALES_XY,plugins:{legend:{display:false}},
+    scales:{x:{ticks:{color:'#475569'},grid:{display:false}},y:{ticks:{color:'#475569'},grid:{color:'#f1f5f9'}}}}
+});
+
+
+new Chart(document.getElementById('supDailyChart'),{
+  type:'line',
+  data:{labels:["2026-05-01", "2026-05-02", "2026-05-03", "2026-05-04", "2026-05-05", "2026-05-06", "2026-05-07", "2026-05-08", "2026-05-09", "2026-05-10", "2026-05-11", "2026-05-12"],datasets:[{label:"全虹企業（Apple）",data:[19364762, 7001156, 9164004, 8368041, 4465147, 6990, 15770, 282459, 95600, 211816, 4490, 12366],borderColor:'#6366f1',backgroundColor:'#6366f122',fill:false,tension:.4,pointRadius:3},{label:"跨境豐收（美妝）",data:[138686, 141160, 170952, 145237, 215760, 137562, 174178, 92008, 167203, 206556, 68769, 100986],borderColor:'#f472b6',backgroundColor:'#f472b622',fill:false,tension:.4,pointRadius:3},{label:"壹伍壹拾（保健）",data:[43395, 29700, 60328, 47603, 38649, 45432, 25989, 35877, 51704, 52861, 20803, 6520],borderColor:'#10b981',backgroundColor:'#10b98122',fill:false,tension:.4,pointRadius:3},{label:"金盛世紙業（日用）",data:[60151, 74027, 78269, 57681, 78922, 72655, 61206, 29749, 52323, 88154, 34249, 48196],borderColor:'#f59e0b',backgroundColor:'#f59e0b22',fill:false,tension:.4,pointRadius:3}]},
+  options:{...OPT_BASE,...SCALES_XY,
+    scales:{x:{ticks:{color:'#475569'},grid:{color:'#f1f5f9'}},
+             y:{ticks:{color:'#475569',callback:v=>'NT$'+(v/10000).toFixed(1)+'萬'},grid:{color:'#f1f5f9'}}}}
+});
+new Chart(document.getElementById('supAgeChart'),{
+  type:'bar',
+  data:{labels:["<25", "25-29", "30-34", "35-39", "40-44", "45-49", "50-54", "55-59", "60+"],datasets:[{label:"全虹企業（Apple）",data:[63, 129, 75, 88, 182, 56, 27, 16, 59],backgroundColor:'#6366f1bb',borderRadius:3},{label:"跨境豐收（美妝）",data:[31, 46, 73, 96, 135, 116, 90, 90, 96],backgroundColor:'#f472b6bb',borderRadius:3},{label:"壹伍壹拾（保健）",data:[4, 1, 7, 13, 20, 35, 32, 25, 12],backgroundColor:'#10b981bb',borderRadius:3},{label:"金盛世紙業（日用）",data:[26, 26, 61, 72, 97, 120, 99, 86, 82],backgroundColor:'#f59e0bbb',borderRadius:3}]},
+  options:{...OPT_BASE,...SCALES_XY,
+    scales:{x:{ticks:{color:'#475569'},grid:{display:false}},
+             y:{ticks:{color:'#475569'},grid:{color:'#f1f5f9'}}}}
+});
+</script>
+</body>
+</html>
